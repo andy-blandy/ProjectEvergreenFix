@@ -9,26 +9,26 @@ public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI textbox;
     public Queue<string> sentences;
+    public DialogueTrigger dt;
+
+    [Header("Characters")]
     public GameObject Lily;
     public GameObject Alexandra;
     public GameObject Cassius;
-    public DialogueTrigger dt;
+
+    [Header("UI")]
     public GameObject nextButton;
-    // Start is called before the first frame update
+    public GameObject dialogueBox;
+
     void Start()
     {
         Lily.SetActive(false);
         Cassius.SetActive(false);
         sentences = new Queue<string>();
-        startDialogue(dt.getDialogue());
+        StartDialogue(dt.GetDialogue());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    public void startDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue)
     {
         Debug.Log("Starting intro");
         sentences.Clear();
@@ -36,22 +36,24 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
-        nextSentence();
+        NextSentence();
     }
-    public void nextSentence()
+
+    public void NextSentence()
     {
         textbox.text = "";
         if(sentences.Count == 0)
         {
-            endDialogue();
+            EndDialogue();
             return;
         }
         string sentence = sentences.Dequeue();
         textbox.text = sentence;
     }
-    public void endDialogue()
+
+    public void EndDialogue()
     {
-        nextButton.SetActive(false);
+        dialogueBox.SetActive(false);
         Alexandra.SetActive(false);
         Debug.Log("End of intro");
     }

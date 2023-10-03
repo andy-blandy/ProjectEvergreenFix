@@ -16,6 +16,7 @@ public class CameraControl : MonoBehaviour
     void Update()
     {
         Move();
+        Rotate();
         UpdateCameraSpeed();
     }
 
@@ -25,25 +26,40 @@ public class CameraControl : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            movementVector += transform.forward;
+            movementVector.z += 1.0f;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            movementVector -= transform.forward;
+            movementVector.z -= 1.0f;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            movementVector -= transform.right;
+            movementVector.x -= 1.0f;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            movementVector += transform.right;
+            movementVector.x += 1.0f;
         }
 
         transform.Translate(movementVector * movementSpeed * Time.deltaTime);
+    }
+
+    void Rotate()
+    {
+        Vector3 rotateAmount = new Vector3(0f, 10f, 0f);
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            transform.Rotate(rotateAmount);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q)) 
+        {
+            transform.Rotate(rotateAmount * -1);
+        }
     }
 
     void UpdateCameraSpeed()

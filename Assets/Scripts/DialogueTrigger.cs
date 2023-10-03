@@ -16,11 +16,11 @@ public class DialogueTrigger : MonoBehaviour
     {
         
     }
-    public void startDialogue()
+    public void StartDialogue()
     {
-        FindObjectOfType<DialogueManager>().startDialogue(dialogue);
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
-    public Dialogue getDialogue()
+    public Dialogue GetDialogue()
     {
         return dialogue;
     }
