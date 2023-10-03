@@ -4,46 +4,58 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    private float movementSpeed;
+    public float normalSpeed = 5.0f;
+    public float quickSpeed = 10.0f;
+
+    void Start()
+    {
+        movementSpeed = normalSpeed;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        Move();
+        UpdateCameraSpeed();
+    }
+
+    void Move()
+    {
+        Vector3 movementVector = Vector3.zero;
+
+        if (Input.GetKey(KeyCode.W))
         {
-            float z = Camera.main.transform.position.z - .5f;
-            float x = Camera.main.transform.position.x + .5f;
-
-            Vector3 CamPos = new Vector3(x, Camera.main.transform.position.y, z);
-
-            Camera.main.transform.position = CamPos;
+            movementVector += transform.forward;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
-            float z = Camera.main.transform.position.z + .5f;
-            float x = Camera.main.transform.position.x - .5f;
-
-            Vector3 CamPos = new Vector3(x, Camera.main.transform.position.y, z);
-
-            Camera.main.transform.position = CamPos;
+            movementVector -= transform.forward;
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
-            float z = Camera.main.transform.position.z + .5f;
-            float x = Camera.main.transform.position.x + .5f;
-
-            Vector3 CamPos = new Vector3(x, Camera.main.transform.position.y, z);
-
-            Camera.main.transform.position = CamPos;
+            movementVector -= transform.right;
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
-            float z = Camera.main.transform.position.z - .5f;
-            float x = Camera.main.transform.position.x - .5f;
+            movementVector += transform.right;
+        }
 
-            Vector3 CamPos = new Vector3(x, Camera.main.transform.position.y, z);
+        transform.Translate(movementVector * movementSpeed * Time.deltaTime);
+    }
 
-            Camera.main.transform.position = CamPos;
+    void UpdateCameraSpeed()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            movementSpeed = quickSpeed;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            movementSpeed = normalSpeed;
         }
     }
 }
