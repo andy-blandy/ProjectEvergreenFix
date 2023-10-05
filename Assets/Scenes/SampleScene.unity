@@ -547,6 +547,7 @@ MonoBehaviour:
   mapSize: {x: 68, y: 6}
   mapHolder: {fileID: 1003213852}
   gamecam: {fileID: 963194227}
+  spawnTestMap: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

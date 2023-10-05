@@ -1,18 +1,33 @@
+/*
+ * Written by Andrew Bland
+ * @andy_blandy on Discord
+ * 
+ * Description:
+ * This script should control the flow of the entire game.
+ * There's no use for it yet other than controlling the resources of the town
+ * 
+ * TO-DO:
+ * - Add getter and setters for each stat
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Camera gameCamera;
+
     [Header("Static Resources")]
-    public int money;
+    public int money = 1000;
     public int happiness;
     public int citizens;
-    public int impact;
+    public int envImpact;
+    public int power;
 
     [Header("Dynamic Resources")]
     public int jobs;
-    public int populationCap;
+    public int populationCapacity;
 
 
     // Singleton
@@ -22,13 +37,11 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         

@@ -38,17 +38,19 @@ public class ResourceGrid
         connectedObjects = new List<GridObject>();
     }
 
-    //Calculates all dynamic resource changes for every connected object
+    // Calculates all dynamic resource changes for every connected object
     public void CalculateGridResources()
     {
+        // Number of times the loop will run
         int calcTurns = 2;
+
         List<string> resourceTypes = GetResourcesCanCarry();
         do
         {
             Dictionary<string, int> totalResourceProduction = new Dictionary<string, int>();
             Dictionary<string, int> totalResourceRequirement = new Dictionary<string, int>();
 
-            //get all resource requirements and productions that effect this grid
+            // Get all resource requirements and productions that effect this grid
             foreach (GridObject go in connectedObjects)
             {
                 foreach (DynamicBuildingResource rbt in go.resources.OfType<DynamicBuildingResource>())
@@ -58,30 +60,45 @@ public class ResourceGrid
                     {
                         if (change[0].valueChange > 0 && go.RequirementMet())
                         {
-                            if (totalResourceProduction.ContainsKey(change[0].name)) totalResourceProduction[change[0].name] += change[0].valueChange;
-                            else totalResourceProduction.Add(change[0].name, change[0].valueChange);
+                            if (totalResourceProduction.ContainsKey(change[0].name))
+                            {
+                                totalResourceProduction[change[0].name] += change[0].valueChange;
+                            }
+                            else
+                            {
+                                totalResourceProduction.Add(change[0].name, change[0].valueChange);
+                            }
                         }
                         if (change[1].valueChange > 0)
                         {
-                            if (totalResourceRequirement.ContainsKey(change[1].name)) totalResourceRequirement[change[1].name] += change[1].valueChange;
-                            else totalResourceRequirement.Add(change[1].name, change[1].valueChange);
+                            if (totalResourceRequirement.ContainsKey(change[1].name))
+                            {
+                                totalResourceRequirement[change[1].name] += change[1].valueChange;
+                            }
+                            else
+                            {
+                                totalResourceRequirement.Add(change[1].name, change[1].valueChange);
+                            }
                         }
                         if (rbt.requiring > 0)
                         {
                             go.resourceRequirementsMet[rbt.GetResourceName()] = true;
-                            Debug.Log("Building req set to true");
+                            Debug.Log("Building requiremets not met");
                         }
                     }
                 }
             }
 
-            //checks which resources are requiring more than is produced
+            // Checks which resources are requiring more than is produced
             List<string> resourcesNotMet = new List<string>();
             foreach (KeyValuePair<string, int> kvp in totalResourceRequirement)
             {
                 if (totalResourceProduction.ContainsKey(kvp.Key))
                 {
-                    if (totalResourceProduction[kvp.Key] < kvp.Value) resourcesNotMet.Add(kvp.Key);
+                    if (totalResourceProduction[kvp.Key] < kvp.Value)
+                    {
+                        resourcesNotMet.Add(kvp.Key);
+                    }
                 }
                 else
                 {
@@ -89,7 +106,7 @@ public class ResourceGrid
                 }
             }
 
-            //disables the newest buildings until resources requirement is less than production.
+            // Disables the newest buildings until resources requirement is less than production.
             foreach (string s in resourcesNotMet)
             {
                 int resourceCount = totalResourceRequirement[s];
@@ -105,17 +122,23 @@ public class ResourceGrid
                             break;
                         }
                     }
+
                     int resourceProduction;
                     totalResourceProduction.TryGetValue(s, out resourceProduction);
-                    if (resourceCount <= resourceProduction) break;
+                    if (resourceCount <= resourceProduction)
+                    {
+                        break;
+                    }
                 }
             }
             calcTurns--;
-            //runs twice just as a reduncany measure
+
+            // Runs twice just as a redundancy measure
+            // andy: Why does it need to run twice??
         } while (calcTurns <= 0);
     }
 
-    //Attempts to add an edge object to the grid
+    // Attempts to add an edge object to the grid
     public bool TryAddEdge(EdgePoint point, string pointType)
     {
         if (pointType != edgeType) return false;
@@ -133,11 +156,18 @@ public class ResourceGrid
         return false;
     }
 
-    //Attempts to add an object to the grid, if added the grid will recheck all resource production
+    /// <summary>
+    /// Attempts to add an object to the grid
+    /// </summary>
+    /// <param name="obj">Object to be added</param>
+    /// <returns>True if object is successfully added, false if not</returns>
     public bool TryAddObject(GridObject obj)
     {
-        //if the grid already has the object in question return false.
-        if (connectedObjects.Contains(obj)) return false;
+        // If the grid already has the object in question, return false.
+        if (connectedObjects.Contains(obj))
+        {
+            return false;
+        }
 
         List<EdgePoint> objectPerimeter = new List<EdgePoint>();
         for (int x = obj.position.x; x < obj.position.x + obj.size.x; x++)
@@ -157,7 +187,10 @@ public class ResourceGrid
                 if (ep.isVertical == op.isVertical && ep.position == op.position)
                 {
                     connectedObjects.Add(obj);
+
+                    // Recheck grid production
                     CalculateGridResources();
+
                     return true;
                 }
             }
@@ -165,7 +198,7 @@ public class ResourceGrid
         return false;
     }
 
-    //Used for combining two or more grids when they connect
+    // Used for combining two or more grids when they connect
     public static ResourceGrid CombineResourceGrids(List<ResourceGrid> rgList)
     {
         ResourceGrid tempGrid = new ResourceGrid(rgList[0].edgeType);
@@ -197,7 +230,7 @@ public class ResourceGrid
         return tempGrid;
     }
 
-    //calculates if two edge points are connected to eachother
+    // Calculates if two edge points are connected to eachother
     public static bool DoesEdgeConnect(EdgePoint point1, EdgePoint point2)
     {
         if (point1.isVertical == point2.isVertical)
@@ -224,8 +257,8 @@ public class ResourceGrid
         }
     }
 
-    //returns a list of the resource type strings that this grid type can carry
-    //Example: powerlines can only carry power resources, not transport
+    // Returns a list of the resource type strings that this grid type can carry
+    // Example: powerlines can only carry power resources, not transport
     List<string> GetResourcesCanCarry()
     {
         switch (edgeType)
