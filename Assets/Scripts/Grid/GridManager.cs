@@ -23,7 +23,8 @@ public class GridManager : MonoBehaviour
     {
         StaticManager.curGridManager = this;
         InitializeMap();
-        TestAddingObjects();
+        //TestAddingObjects();
+        GetGridObjectsFromMapHolder();
         TestDrawMap();
     }
 
@@ -43,6 +44,39 @@ public class GridManager : MonoBehaviour
         TryAddObject(new Vector2Int(0, 2), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(15, 0) });
         TryAddObject(new Vector2Int(4, 0), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(0, 10) });
         TryAddObject(new Vector2Int(4, 4), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(0, 10) });
+    }
+    void GetGridObjectsFromMapHolder()
+    {
+        foreach(Transform t in mapHolder.transform)
+        {
+            if(t.position.x < 0 || t.position.z > 0 || t.position.x > mapSize.x-1 || t.position.z < -(mapSize.y-1))
+            {
+                Debug.Log("Gameobject: " + t.name + " couldn't be added because it is out of level bounds, please make sure all prefab objects are placed within map bounds.");
+                break;
+            }
+            switch (t.name)
+            {
+                case "Edge":
+                    bool isEdgeVertical = Mathf.Abs((t.position.x % 1f) - 0.5f) < 0.25f;
+                    Vector2Int edgePosition;
+
+                    if (isEdgeVertical)
+                    {
+                        edgePosition = new Vector2Int(Mathf.RoundToInt(t.position.x - 0.5f), Mathf.RoundToInt(-t.position.z));
+                    }
+                    else
+                    {
+                        edgePosition = new Vector2Int(Mathf.RoundToInt(t.position.x), Mathf.RoundToInt(-(t.position.z + 0.5f)));
+                    }
+                    Debug.Log(edgePosition);
+                    TryAddEdge(edgePosition, "test", isEdgeVertical);
+
+                    break;
+                case "Building":
+
+                    break;
+            }
+        }
     }
 
     /// <summary>
@@ -83,15 +117,15 @@ public class GridManager : MonoBehaviour
         }
         for (int x = 0; x < mapSize.x; x++)
         {
-            for (int y = 0; y < mapSize.x; y++)
+            for (int y = 0; y < mapSize.y; y++)
             {
                 GameObject ground = (GameObject)Instantiate(Resources.Load("Floor"), new Vector3(x, 0, -y), Quaternion.identity, mapHolder.transform);
                 ground.transform.localScale = new Vector3(1, 0.01f, 1);
                 Material tempMat = ground.GetComponent<MeshRenderer>().material;
-                tempMat.color = new Color((y+1) / 6f, (x+1) / 6f, 0);
+                tempMat.color = new Color((x+(y%2))%2 * 0.6f, (x + (y % 2)+1) % 2 * 0.6f, 0);
                 if (x < mapSize.x - 1)
                 {
-                    if(GetEdgesOnSpace(new Vector2Int(x,y),true).Count > 0)
+                    if(GetEdgesOnSpace(new Vector2Int(x, y), true).Count > 0)
                     {
                         GameObject temp = (GameObject)Instantiate(Resources.Load("Edge"), new Vector3(x + 0.5f, 0.05f, -y), Quaternion.identity, mapHolder.transform);
                         temp.transform.localScale = new Vector3(0.1f, 0.1f, 1);
