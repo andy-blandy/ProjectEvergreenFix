@@ -21,4 +21,8 @@ public class Scene_change : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
     }
+    public void playTutorial()
+    {
+        SceneManager.LoadScene("TutorialPrototype");
+    }
 }
