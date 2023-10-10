@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Destructable
+  - Tree
+  - Building
+  - Road
   layers:
   - Default
   - TransparentFX

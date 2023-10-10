@@ -163,7 +163,7 @@ public class PlayerControls : MonoBehaviour
 
         // If the object has the tag "Destructable", deactivate it.
         if (rayHit.collider != null &&
-            rayHit.collider.gameObject.tag == "Destructable")
+            rayHit.collider.gameObject.tag == "Tree")
         {
             // Hide the object
             rayHit.collider.gameObject.SetActive(false);
@@ -172,6 +172,30 @@ public class PlayerControls : MonoBehaviour
             GameManager.instance.envImpact += 1;
             GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
             statChange.GetComponent<StatChangePopup>().SetArrow(true, "EI");
+        }
+
+        if (rayHit.collider != null &&
+            rayHit.collider.gameObject.tag == "Building")
+        {
+            // Hide the object
+            rayHit.collider.gameObject.SetActive(false);
+
+            // Adjust the environmental impact
+            GameManager.instance.envImpact -= 1;
+            GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
+            statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
+        }
+
+        if (rayHit.collider != null &&
+            rayHit.collider.gameObject.tag == "Road")
+        {
+            // Hide the object
+            rayHit.collider.gameObject.SetActive(false);
+
+            // Adjust the environmental impact
+            //GameManager.instance.envImpact -= 1;
+            //GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
+            //statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
         }
     }
 
