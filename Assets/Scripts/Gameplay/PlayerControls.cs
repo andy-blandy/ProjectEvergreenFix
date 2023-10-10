@@ -23,10 +23,10 @@ public class PlayerControls : MonoBehaviour
 
     [Header("States")]
     public string currentControlMode;
-    public bool isPlacingBuilding;
+    public bool isPlacingObject;
 
     [Header("Place Mode")]
-    public GameObject selectedBuilding;
+    public GameObject selectedObject;
     [SerializeField] private LayerMask groundLayer;
     [Range(1, 90)] public int rotationAmount = 45;
 
@@ -71,7 +71,7 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     void PlaceModeUpdate()
     {
-        if (isPlacingBuilding)
+        if (isPlacingObject)
         {
             // Shoot a raycast to find where on the ground the mouse is
             // This will only hit objects with their layer property set to "Ground"
@@ -79,25 +79,26 @@ public class PlayerControls : MonoBehaviour
             Physics.Raycast(gameCamera.ScreenPointToRay(Input.mousePosition), out rayHit, Mathf.Infinity, groundLayer);
 
             // Set the position of the selected building to the player's cursor (found with raycast)
-            if (rayHit.collider != null)
+            if (rayHit.collider != null &&
+                rayHit.collider.gameObject.TryGetComponent<Tile>(out Tile selectedTile))
             {
-                selectedBuilding.transform.position = rayHit.point;
+                selectedObject.transform.position = selectedTile.tileCenter;
             }
 
             // If Z or C are pressed, rotate the building
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                selectedBuilding.transform.Rotate(new Vector3(0f, rotationAmount, 0f));
+                selectedObject.transform.Rotate(new Vector3(0f, rotationAmount, 0f));
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
-                selectedBuilding.transform.Rotate(new Vector3(0f, rotationAmount * -1, 0f));
+                selectedObject.transform.Rotate(new Vector3(0f, rotationAmount * -1, 0f));
             }
 
             // Deselect the building when backspace is pressed
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
-                DeselectBuilding();
+                DeselectObject();
             }
         }
     }
@@ -120,9 +121,9 @@ public class PlayerControls : MonoBehaviour
         }
 
         // If needed, delete selected building
-        if (isPlacingBuilding)
+        if (isPlacingObject)
         {
-            DeselectBuilding();
+            DeselectObject();
         }
 
         // Update UI
@@ -140,9 +141,9 @@ public class PlayerControls : MonoBehaviour
                 DeleteObject();
                 break;
             case "place":
-                if (isPlacingBuilding)
+                if (isPlacingObject)
                 {
-                    PlaceBuilding();
+                    PlaceObject();
                 }
                 break;
             default:
@@ -164,65 +165,71 @@ public class PlayerControls : MonoBehaviour
         if (rayHit.collider != null &&
             rayHit.collider.gameObject.tag == "Destructable")
         {
+            // Hide the object
             rayHit.collider.gameObject.SetActive(false);
 
+            // Adjust the environmental impact
             GameManager.instance.envImpact += 1;
             GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
             statChange.GetComponent<StatChangePopup>().SetArrow(true, "EI");
-            /*
-             * Insert code to affect environmental impact here
-             */
         }
     }
 
     /// <summary>
     /// Instantiate the desired building
     /// </summary>
-    /// <param name="buildingToSpawn"></param>
-    public void SpawnBuilding(GameObject buildingToSpawn)
+    /// <param name="objectToSpawn"></param>
+    public void SpawnObject(GameObject objectToSpawn)
     {
-        isPlacingBuilding = true;
+        isPlacingObject = true;
 
         // Spawn building off screen
-        selectedBuilding = Instantiate(buildingToSpawn, new Vector3(0f, -100f, 0f), Quaternion.identity);
+        selectedObject = Instantiate(objectToSpawn, new Vector3(0f, -100f, 0f), Quaternion.identity);
 
         // Get reference to building script
-        PrototypeBuilding buildingScript = selectedBuilding.GetComponent<PrototypeBuilding>();
+        PlaceableObject objectScript = selectedObject.GetComponent<PlaceableObject>();
 
         // Set building model to guide
-        buildingScript.SetModelToGuide();
-        buildingScript.isPaidFor = false;
+        objectScript.SetModelToGuide();
+        objectScript.isPaidFor = false;
     }
 
     /// <summary>
     /// Place the selected building on the map
     /// </summary>
-    void PlaceBuilding()
+    void PlaceObject()
     {
-        PrototypeBuilding buildingScript = selectedBuilding.GetComponent<PrototypeBuilding>();
+        PlaceableObject objectScript = selectedObject.GetComponent<PlaceableObject>();
 
         // Same raycast code as before
         RaycastHit rayHit;
         Physics.Raycast(gameCamera.ScreenPointToRay(Input.mousePosition), out rayHit, Mathf.Infinity, groundLayer);
 
         // Do nothing if the mouse is not clicking the ground, or if the building is currently colliding with another object
-        if (rayHit.collider == null || buildingScript.isColliding)
+        if (rayHit.collider == null || objectScript.isColliding)
         {
             return;
         }
 
         // Set building model to final model
-        buildingScript.SetModelToPlaced();
+        objectScript.PlaceObject();
+
+        // If the object is a road, give it to the road manager.
+        // This will deal with the logic of connecting buildings to the town square (eventually...)
+        if (selectedObject.TryGetComponent<Road>(out Road road))
+        {
+            RoadManager.instance.AddRoad(road);
+        }
 
         // Stop tracking building
-        isPlacingBuilding = false;
-        selectedBuilding = null;
+        isPlacingObject = false;
+        selectedObject = null;
 
         // If this is the first time placing the building, pay the cost of it
         // Ideally this will allow the player to eventually move around buildings they've placed, without having to pay for it each time
-        if (!buildingScript.isPaidFor)
+        if (!objectScript.isPaidFor)
         {
-            PayForBuilding(buildingScript);
+            PayForBuilding(objectScript);
         }
 
         /*
@@ -230,10 +237,10 @@ public class PlayerControls : MonoBehaviour
          */
     }
 
-    void PayForBuilding(PrototypeBuilding buildingScript)
+    void PayForBuilding(PlaceableObject objectScript)
     {
         // Remove the cost of the building from the player's money
-        GameManager.instance.money -= buildingScript.cost;
+        GameManager.instance.money -= objectScript.cost;
 
         /*
          * Insert code for GUI here
@@ -241,21 +248,21 @@ public class PlayerControls : MonoBehaviour
          */
 
         // Update the building's logic
-        buildingScript.isPaidFor = true;
+        objectScript.isPaidFor = true;
     }
 
     /// <summary>
-    /// Destroys the currently selected building from the scene
+    /// Removes the currently selected object from the scene
     /// </summary>
-    void DeselectBuilding()
+    void DeselectObject()
     {
-        if (selectedBuilding != null)
+        if (selectedObject != null)
         {
-            Destroy(selectedBuilding);
+            Destroy(selectedObject);
         }
 
-        isPlacingBuilding = false;
-        selectedBuilding = null;
+        isPlacingObject = false;
+        selectedObject = null;
     }
 
 }

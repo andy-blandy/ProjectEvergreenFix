@@ -17,15 +17,25 @@ public class GridManager : MonoBehaviour
 
     public GameObject mapHolder;
     public Camera gamecam;
-    
+
+    public bool spawnMap = false;
+
+    public static GridManager instance;
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
-        StaticManager.curGridManager = this;
-        InitializeMap();
-        //TestAddingObjects();
         GetGridObjectsFromMapHolder();
-        TestDrawMap();
+
+        if (spawnMap)
+        {
+            InitializeMap();
+            //TestAddingObjects();
+            TestDrawMap();
+        }
     }
 
     void Update()
@@ -39,21 +49,17 @@ public class GridManager : MonoBehaviour
         //Debug.Log(objects[2].RequirementMet() + " building 2");
     }
 
-    void TestAddingObjects()
-    {
-        TryAddObject(new Vector2Int(0, 2), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(15, 0) });
-        TryAddObject(new Vector2Int(4, 0), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(0, 10) });
-        TryAddObject(new Vector2Int(4, 4), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(0, 10) });
-    }
     void GetGridObjectsFromMapHolder()
     {
-        foreach(Transform t in mapHolder.transform)
+
+        foreach (Transform t in mapHolder.transform)
         {
-            if(t.position.x < 0 || t.position.z > 0 || t.position.x > mapSize.x-1 || t.position.z < -(mapSize.y-1))
+            if (t.position.x < 0 || t.position.z > 0 || t.position.x > mapSize.x - 1 || t.position.z < -(mapSize.y - 1))
             {
                 Debug.Log("Gameobject: " + t.name + " couldn't be added because it is out of level bounds, please make sure all prefab objects are placed within map bounds.");
                 break;
             }
+
             switch (t.name)
             {
                 case "Edge":
@@ -79,6 +85,31 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    //Initializes the map variables
+    public void InitializeMap()
+    {
+        tileType = new string[mapSize.x, mapSize.y];
+        horizontalEdges = new string[mapSize.x, mapSize.y - 1];
+        verticalEdges = new string[mapSize.x - 1, mapSize.y];
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                tileType[x, y] = "grass";
+                if (x < mapSize.x - 1) verticalEdges[x, y] = "";
+                if (y < mapSize.y - 1) horizontalEdges[x, y] = "";
+            }
+        }
+        gridObjects = new List<GridObject>();
+    }
+
+    void TestAddingObjects()
+    {
+        TryAddObject(new Vector2Int(0, 2), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(15, 0) });
+        TryAddObject(new Vector2Int(4, 0), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(0, 10) });
+        TryAddObject(new Vector2Int(4, 4), new Vector2Int(2, 2), "thing", new List<ResourceBuildingType> { new PowerBuildingResource(0, 10) });
+    }
+
     /// <summary>
     /// Finds the jobs and population count from each building that has their requirements met
     /// </summary>
@@ -88,11 +119,11 @@ public class GridManager : MonoBehaviour
         int jobs = 0;
         int populationCap = 0;
 
-        foreach(GridObject go in gridObjects)
+        foreach(GridObject gridObject in gridObjects)
         {
-            if (go.RequirementMet())
+            if (gridObject.RequirementMet())
             {
-                foreach (DynamicBuildingResource dbr in go.resources.OfType<DynamicBuildingResource>())
+                foreach (DynamicBuildingResource dbr in gridObject.resources.OfType<DynamicBuildingResource>())
                 {
                     ResourceChange rc = dbr.GetDynamicResourceValue()[0];
                     if (rc.name == "Jobs") jobs += rc.valueChange;
@@ -178,23 +209,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    //Initializes the map variables
-    public void InitializeMap()
-    {
-        tileType = new string[mapSize.x, mapSize.y];
-        horizontalEdges = new string[mapSize.x, mapSize.y - 1];
-        verticalEdges = new string[mapSize.x - 1, mapSize.y];
-        for(int x = 0; x < mapSize.x; x++)
-        {
-            for (int y = 0; y < mapSize.y; y++)
-            {
-                tileType[x, y] = "grass";
-                if (x < mapSize.x - 1) verticalEdges[x, y] = "";
-                if (y < mapSize.y - 1) horizontalEdges[x, y] = "";
-            }
-        }
-        gridObjects = new List<GridObject>();
-    }
+
 
     /// <summary>
     /// Attempts to add a building object
@@ -269,10 +284,21 @@ public class GridManager : MonoBehaviour
             Debug.Log(edgeType + " is not a valid edge object");
             return false;
         }
-        int edgeSuperType = 0; //Get the edge's supertype, edges of different supertypes can overlap. 0: ground, 1: underground, 2: elevated
-        if (undergroundEdges.Contains(edgeType)) edgeSuperType = 1;
-        if (elevatedEdges.Contains(edgeType)) edgeSuperType = 2;
+
+        //Get the edge's supertype, edges of different supertypes can overlap. 0: ground, 1: underground, 2: elevated
+        int edgeSuperType = 0;
+        if (undergroundEdges.Contains(edgeType)) 
+        { 
+            edgeSuperType = 1;
+        }
+        if (elevatedEdges.Contains(edgeType))
+        {
+            edgeSuperType = 2;
+        }
+
+
         List<string> edgesPresent = GetEdgesOnSpace(location, isVertical);
+
         if (edgesPresent.Contains(edgeType)) //check if exact edge already exists
         {
             Debug.Log(edgeType + " edge object is already present at " + location + (isVertical ? " vertical edge" : " horizontal edge"));

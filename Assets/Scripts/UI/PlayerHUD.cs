@@ -14,6 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
@@ -32,8 +33,14 @@ public class PlayerHUD : MonoBehaviour
     [Header("Editing")]
     public GameObject editingMenu;
     public TextMeshProUGUI currentModeText;
-
     public static PlayerHUD instance;
+    public GameObject MissionsMenu;
+    public GameObject MissionsButton;
+    public GameObject EditingMenuButton;
+    public GameObject EditingMenuPopup;
+    public GameObject PlaceMenu;
+    public GameObject ExitPlaceMenuButton;
+
     void Awake()
     {
         instance = this;
@@ -105,4 +112,74 @@ public class PlayerHUD : MonoBehaviour
         moneyText.text = gameManager.money.ToString();
     }
 
+
+    public void ShowMissionsMenu()
+    {
+        MissionsMenu.SetActive(true);
+        MissionsButton.SetActive(false);
+        if (EditingMenuPopup.activeInHierarchy == true)
+        {
+            HideEditMenu();
+        }
+    }
+
+    public void HideMissionsMenu()
+    {
+        MissionsMenu.SetActive(false);
+        MissionsButton.SetActive(true);
+    }
+
+    public void ShowEditMenu()
+    {
+        EditingMenuButton.SetActive(false);
+        EditingMenuPopup.SetActive(true);
+        if (MissionsMenu.activeInHierarchy == true)
+        {
+            HideMissionsMenu();
+        }
+
+        if (PlaceMenu.activeInHierarchy == true)
+        {
+            PlaceMenu.SetActive(false);        }
+    }
+
+    public void HideEditMenu()
+    {
+        EditingMenuButton.SetActive(true);
+        EditingMenuPopup.SetActive(false);
+
+        if (PlaceMenu.activeInHierarchy == true)
+        {
+            EditingMenuButton.SetActive(false);
+        }
+    }
+
+    public void HideAllMenus()
+    {
+        if (MissionsMenu.activeInHierarchy == true)
+        {
+            MissionsMenu.SetActive(false);
+        }
+        if (editingMenu.activeInHierarchy == true)
+        {
+            editingMenu.SetActive(false);
+        }
+        if (EditingMenuPopup.activeInHierarchy == true)
+        {
+            EditingMenuPopup.SetActive(false);
+        }
+        if (PlaceMenu.activeInHierarchy == true)
+        {
+            PlaceMenu.SetActive(false);
+        }
+        if (ExitPlaceMenuButton.activeInHierarchy == true)
+        {
+            ExitPlaceMenuButton.SetActive(false);
+        }
+    }
+
+    public void DisplayExitButton()
+    {
+        ExitPlaceMenuButton.SetActive(true);
+    }
 }

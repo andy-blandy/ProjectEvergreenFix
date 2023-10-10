@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2997413391955134339}
   - component: {fileID: 6558834855434432223}
   - component: {fileID: 2174269661986682731}
-  - component: {fileID: 7269425620803653542}
+  - component: {fileID: 384251723860892999}
   m_Layer: 5
   m_Name: BuildingButton
   m_TagString: Untagged
@@ -126,8 +126,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7269425620803653542}
-        m_TargetAssemblyTypeName: BuildingIcon, Assembly-CSharp
+      - m_Target: {fileID: 384251723860892999}
+        m_TargetAssemblyTypeName: ObjectIcon, Assembly-CSharp
         m_MethodName: SelectBuilding
         m_Mode: 1
         m_Arguments:
@@ -183,7 +183,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &7269425620803653542
+--- !u!114 &384251723860892999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,10 +192,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 29689834525378052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a008e498b2026be428042567ced4e32b, type: 3}
+  m_Script: {fileID: 11500000, guid: b8896effe3d8e2f48aa18e8648a1d4a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 0}
+  objectPrefab: {fileID: 0}
   nameText: {fileID: 4516391324709638083}
   descriptionText: {fileID: 1195473626470168001}
   costText: {fileID: 1613770931474933942}
