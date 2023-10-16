@@ -20,6 +20,9 @@ public class DialogueManager : MonoBehaviour
     public GameObject nextButton;
     public GameObject dialogueBox;
 
+    [Header("Audio")]
+    public AudioSource buttonSFX;
+
     void Start()
     {
         Lily.SetActive(false);
@@ -41,6 +44,7 @@ public class DialogueManager : MonoBehaviour
 
     public void NextSentence()
     {
+        buttonSFX.Play();
         textbox.text = "";
         if(sentences.Count == 0)
         {

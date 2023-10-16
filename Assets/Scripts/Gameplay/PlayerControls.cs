@@ -34,6 +34,11 @@ public class PlayerControls : MonoBehaviour
     public GameObject placeMenu;
     public GameObject statChangePrefab;
 
+    [Header("Audio")]
+    public AudioSource buildSFX;
+    public AudioSource destroySFX;
+    public AudioSource buttonSFX;
+
     // Singleton
     public static PlayerControls instance;
     void Awake()
@@ -157,6 +162,9 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     void DeleteObject()
     {
+        // Audio
+        buttonSFX.Play();
+
         // Shoot a raycast out from the camera to find the object the player is pointing at
         RaycastHit rayHit;
         Physics.Raycast(gameCamera.ScreenPointToRay(Input.mousePosition), out rayHit, Mathf.Infinity);
@@ -172,6 +180,9 @@ public class PlayerControls : MonoBehaviour
             GameManager.instance.envImpact += 1;
             GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
             statChange.GetComponent<StatChangePopup>().SetArrow(true, "EI");
+
+            // Audio
+            destroySFX.Play();
         }
 
         if (rayHit.collider != null &&
@@ -184,6 +195,9 @@ public class PlayerControls : MonoBehaviour
             GameManager.instance.envImpact -= 1;
             GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
             statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
+
+            // Audio
+            destroySFX.Play();
         }
 
         if (rayHit.collider != null &&
@@ -196,6 +210,9 @@ public class PlayerControls : MonoBehaviour
             //GameManager.instance.envImpact -= 1;
             //GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
             //statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
+
+            // Audio
+            destroySFX.Play();
         }
     }
 
@@ -223,6 +240,9 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     void PlaceObject()
     {
+        // Audio
+        buttonSFX.Play();
+
         PlaceableObject objectScript = selectedObject.GetComponent<PlaceableObject>();
 
         // Same raycast code as before
@@ -259,6 +279,9 @@ public class PlayerControls : MonoBehaviour
         /*
          * Insert code to connect to grid manager
          */
+
+        // Audio
+        buildSFX.Play();
     }
 
     void PayForBuilding(PlaceableObject objectScript)

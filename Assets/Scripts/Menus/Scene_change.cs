@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Scene_change : MonoBehaviour
 {
+    // Audio
+    public AudioSource buttonSFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,10 +22,12 @@ public class Scene_change : MonoBehaviour
     }
     public void NextScene()
     {
+        buttonSFX.Play();
         SceneManager.LoadScene("SampleScene");
     }
     public void playTutorial()
     {
+        buttonSFX.Play();
         SceneManager.LoadScene("TutorialPrototype");
     }
 }

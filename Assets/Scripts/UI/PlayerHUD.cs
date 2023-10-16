@@ -41,6 +41,11 @@ public class PlayerHUD : MonoBehaviour
     public GameObject PlaceMenu;
     public GameObject ExitPlaceMenuButton;
 
+    [Header("Audio")]
+    public AudioSource missionsMenuSFX;
+    public AudioSource editMenuSFX;
+    public AudioSource buttonSFX;
+
     void Awake()
     {
         instance = this;
@@ -121,12 +126,16 @@ public class PlayerHUD : MonoBehaviour
         {
             HideEditMenu();
         }
+        // Audio
+        missionsMenuSFX.Play();
     }
 
     public void HideMissionsMenu()
     {
         MissionsMenu.SetActive(false);
         MissionsButton.SetActive(true);
+        // Audio
+        buttonSFX.Play();
     }
 
     public void ShowEditMenu()
@@ -141,6 +150,8 @@ public class PlayerHUD : MonoBehaviour
         if (PlaceMenu.activeInHierarchy == true)
         {
             PlaceMenu.SetActive(false);        }
+        // Audio
+        editMenuSFX.Play();
     }
 
     public void HideEditMenu()
@@ -152,6 +163,8 @@ public class PlayerHUD : MonoBehaviour
         {
             EditingMenuButton.SetActive(false);
         }
+        // Audio
+        buttonSFX.Play();
     }
 
     public void HideAllMenus()
