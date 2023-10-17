@@ -215,6 +215,30 @@ public class PlayerControls : MonoBehaviour
             // Audio
             destroySFX.Play();
         }
+
+        if (rayHit.collider != null &&
+            rayHit.collider.gameObject.tag == "Building")
+        {
+            // Hide the object
+            rayHit.collider.gameObject.SetActive(false);
+
+            // Adjust the environmental impact
+            GameManager.instance.envImpact -= 1;
+            GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
+            statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
+        }
+
+        if (rayHit.collider != null &&
+            rayHit.collider.gameObject.tag == "Road")
+        {
+            // Hide the object
+            rayHit.collider.gameObject.SetActive(false);
+
+            // Adjust the environmental impact
+            //GameManager.instance.envImpact -= 1;
+            //GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
+            //statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
+        }
     }
 
     /// <summary>
