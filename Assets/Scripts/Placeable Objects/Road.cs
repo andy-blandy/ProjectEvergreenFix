@@ -11,7 +11,7 @@ public class Road : PlaceableObject
 
     // This allows us to communicate with RoadManager whenever a road is placed
     public delegate void RoadPlacedAction();
-    public event RoadPlacedAction OnRoadPlaced;
+    //public event RoadPlacedAction OnRoadPlaced;
 
     void Awake()
     {

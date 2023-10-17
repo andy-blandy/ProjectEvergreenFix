@@ -14,6 +14,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.CullingGroup;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -274,6 +275,8 @@ public class PlayerControls : MonoBehaviour
         if (!objectScript.isPaidFor)
         {
             PayForBuilding(objectScript);
+            GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
+            statChange.GetComponent<StatChangePopup>().SetArrow(false, "$" + objectScript.cost.ToString());
         }
 
         /*
