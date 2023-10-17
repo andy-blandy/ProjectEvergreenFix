@@ -1189,6 +1189,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1791519531}
+        m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
+        m_MethodName: BeginAlexDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &132332320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,7 +1451,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1791519531}
         m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
         m_MethodName: FinishTextDiaLogue
         m_Mode: 1
@@ -2194,6 +2206,18 @@ MonoBehaviour:
       - m_Target: {fileID: 927951858}
         m_TargetAssemblyTypeName: PlayerHUD, Assembly-CSharp
         m_MethodName: ShowEditMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1791519531}
+        m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
+        m_MethodName: BeginAlexDialogue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14444,6 +14468,18 @@ MonoBehaviour:
           m_StringArgument: move
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1791519531}
+        m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
+        m_MethodName: BeginAlexDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1259415841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17389,7 +17425,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1791519531}
         m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
         m_MethodName: AlexNextSentence
         m_Mode: 1
@@ -18877,13 +18913,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f702f6a451b8ce44ba71ca0d7411426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Alex: {fileID: 0}
-  Cassius: {fileID: 0}
-  Lily: {fileID: 0}
-  DialogueBackground: {fileID: 0}
-  DiaBox: {fileID: 0}
-  NextButton: {fileID: 0}
-  FinishButton: {fileID: 0}
+  Alex: {fileID: 1899037177}
+  Cassius: {fileID: 615028959}
+  Lily: {fileID: 803335279}
+  DialogueBackground: {fileID: 595045520}
+  DiaBox: {fileID: 416684414}
+  NextButton: {fileID: 1637698559}
+  FinishButton: {fileID: 152611974}
 --- !u!4 &1794158245 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5642950581615292667, guid: e28b8a0bc24598d4ab226ee3680577d8, type: 3}
