@@ -1,15 +1,20 @@
+/*
+ * Written by Andrew
+ * @andy_blandy on Discord
+ * 
+ * Description:
+ * Every object that can be placed will inherit from this class
+ * 
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlaceableObject : MonoBehaviour
 {
+    [Header("Properties")]
     public string objectName;
-
-    public bool isColliding;
-    private Collider currentCollider;
-
-    [Header("Stats")]
     public int cost;
 
     [Header("UI")]
@@ -26,18 +31,20 @@ public class PlaceableObject : MonoBehaviour
     public Material errorMaterial;
     public Material guideMaterial;
 
+    [Header("Collision Detection")]
+    public bool isColliding;
+    private Collider currentCollider;
+
     void Awake()
     {
         
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -51,7 +58,7 @@ public class PlaceableObject : MonoBehaviour
         }
     }
 
-    // If the building's collider is touching another collider, don't allow the player to place the object
+    #region Collision Detection
     void OnTriggerEnter(Collider other)
     {
         // Do nothing if the building has already been placed
@@ -60,17 +67,15 @@ public class PlaceableObject : MonoBehaviour
             return;
         }
 
+        // If the building's collider is touching another collider, don't allow the player to place the object
         currentCollider = other;
         isColliding = true;
         foreach (MeshRenderer meshRenderer in modelMeshRenderer)
         {
             meshRenderer.SetMaterials(new List<Material>() { errorMaterial });
         }
-
-        Debug.Log(other.gameObject.name);
     }
 
-    // If the building's collider exits another collider, allow the player to place the object
     private void OnTriggerExit(Collider other)
     {
         // Do nothing if the building has already been placed
@@ -79,6 +84,7 @@ public class PlaceableObject : MonoBehaviour
             return;
         }
 
+        // If the building's collider exits another collider, allow the player to place the object
         if (other == currentCollider)
         {
             currentCollider = null;
@@ -89,6 +95,7 @@ public class PlaceableObject : MonoBehaviour
             }
         }
     }
+    #endregion
 
     public void PlaceObject()
     {

@@ -5,15 +5,17 @@
  * Description:
  * This script is how the player will interact with the game world.
  * Currently, it only supports two modes: Destroy, and Place.
- * Only implemented in the TutorialPrototype scene.
+ * Only implemented in the TutorialPrototype and TilemapTest scenes.
  * 
  * TO-DO:
  * - Add a timer for destroying objects
+ * - Prevent player from placing objects when clicking the "X" button in the GUI menu
  */
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using static UnityEngine.CullingGroup;
 
 public class PlayerControls : MonoBehaviour
@@ -21,6 +23,12 @@ public class PlayerControls : MonoBehaviour
     // We need a reference to the gameCamera to shoot raycasts out of.
     // This will allow the player to interact with objects on the grid.
     private Camera gameCamera;
+
+    [Header("Tilemap")]
+    public GridLayout gridLayout;
+    private Grid grid;
+    [SerializeField] private Tilemap mainTileMap;
+    [SerializeField] private TileBase whiteTile;
 
     [Header("States")]
     public string currentControlMode;
@@ -45,6 +53,8 @@ public class PlayerControls : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        grid = gridLayout.gameObject.GetComponent<Grid>();
     }
 
     void Start()
@@ -72,40 +82,58 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    public Vector3 GetMouseWorldPosition()
+    {
+        Ray ray = gameCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit))
+        {
+            return raycastHit.point;
+        } else
+        {
+            return Vector3.zero;
+        }
+    }
+
+    public Vector3 SnapCoordinateToGrid(Vector3 position)
+    {
+        Vector3Int cellPos = gridLayout.WorldToCell(position);
+        position = grid.GetCellCenterWorld(cellPos);
+        return position;
+    }
+
     /// <summary>
     /// Handles building placement. If a building is currently selected, it will follow the player's cursor.
     /// </summary>
     void PlaceModeUpdate()
     {
-        if (isPlacingObject)
+        if (!isPlacingObject)
         {
-            // Shoot a raycast to find where on the ground the mouse is
-            // This will only hit objects with their layer property set to "Ground"
-            RaycastHit rayHit;
-            Physics.Raycast(gameCamera.ScreenPointToRay(Input.mousePosition), out rayHit, Mathf.Infinity, groundLayer);
+            return;
+        }
 
-            // Set the position of the selected building to the player's cursor (found with raycast)
-            if (rayHit.collider != null &&
-                rayHit.collider.gameObject.TryGetComponent<Tile>(out Tile selectedTile))
-            {
-                selectedObject.transform.position = selectedTile.tileCenter;
-            }
+        // Set the position of the selected building to the player's cursor (found with raycast)
+        Vector3 mousePosition = SnapCoordinateToGrid(GetMouseWorldPosition());
+        Vector3Int convertedMousePosition = mainTileMap.WorldToCell(mousePosition);
 
-            // If Z or C are pressed, rotate the building
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                selectedObject.transform.Rotate(new Vector3(0f, rotationAmount, 0f));
-            }
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                selectedObject.transform.Rotate(new Vector3(0f, rotationAmount * -1, 0f));
-            }
+        if (mainTileMap.HasTile(convertedMousePosition))
+        {
+            selectedObject.transform.position = mousePosition;
+        }
 
-            // Deselect the building when backspace is pressed
-            if (Input.GetKeyDown(KeyCode.Backspace))
-            {
-                DeselectObject();
-            }
+        // If Z or C are pressed, rotate the building
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            selectedObject.transform.Rotate(new Vector3(0f, rotationAmount, 0f));
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            selectedObject.transform.Rotate(new Vector3(0f, rotationAmount * -1, 0f));
+        }
+
+        // Deselect the building when backspace is pressed
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            DeselectObject();
         }
     }
 
@@ -170,7 +198,7 @@ public class PlayerControls : MonoBehaviour
         RaycastHit rayHit;
         Physics.Raycast(gameCamera.ScreenPointToRay(Input.mousePosition), out rayHit, Mathf.Infinity);
 
-        // If the object has the tag "Destructable", deactivate it.
+        // If the object has the tag "Tree", deactivate it.
         if (rayHit.collider != null &&
             rayHit.collider.gameObject.tag == "Tree")
         {
@@ -192,11 +220,6 @@ public class PlayerControls : MonoBehaviour
             // Hide the object
             rayHit.collider.gameObject.SetActive(false);
 
-            // Adjust the environmental impact
-            GameManager.instance.envImpact -= 1;
-            GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
-            statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
-
             // Audio
             destroySFX.Play();
         }
@@ -207,37 +230,8 @@ public class PlayerControls : MonoBehaviour
             // Hide the object
             rayHit.collider.gameObject.SetActive(false);
 
-            // Adjust the environmental impact
-            //GameManager.instance.envImpact -= 1;
-            //GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
-            //statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
-
             // Audio
             destroySFX.Play();
-        }
-
-        if (rayHit.collider != null &&
-            rayHit.collider.gameObject.tag == "Building")
-        {
-            // Hide the object
-            rayHit.collider.gameObject.SetActive(false);
-
-            // Adjust the environmental impact
-            GameManager.instance.envImpact -= 1;
-            GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
-            statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
-        }
-
-        if (rayHit.collider != null &&
-            rayHit.collider.gameObject.tag == "Road")
-        {
-            // Hide the object
-            rayHit.collider.gameObject.SetActive(false);
-
-            // Adjust the environmental impact
-            //GameManager.instance.envImpact -= 1;
-            //GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
-            //statChange.GetComponent<StatChangePopup>().SetArrow(false, "EI");
         }
     }
 
@@ -273,9 +267,11 @@ public class PlayerControls : MonoBehaviour
         // Same raycast code as before
         RaycastHit rayHit;
         Physics.Raycast(gameCamera.ScreenPointToRay(Input.mousePosition), out rayHit, Mathf.Infinity, groundLayer);
+        Vector3 mousePosition = SnapCoordinateToGrid(GetMouseWorldPosition());
+        Vector3Int convertedMousePosition = mainTileMap.WorldToCell(mousePosition);
 
         // Do nothing if the mouse is not clicking the ground, or if the building is currently colliding with another object
-        if (rayHit.collider == null || objectScript.isColliding)
+        if (rayHit.collider == null || objectScript.isColliding || !mainTileMap.HasTile(convertedMousePosition))
         {
             return;
         }
@@ -302,10 +298,6 @@ public class PlayerControls : MonoBehaviour
             GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
             statChange.GetComponent<StatChangePopup>().SetArrow(false, "$" + objectScript.cost.ToString());
         }
-
-        /*
-         * Insert code to connect to grid manager
-         */
 
         // Audio
         buildSFX.Play();
