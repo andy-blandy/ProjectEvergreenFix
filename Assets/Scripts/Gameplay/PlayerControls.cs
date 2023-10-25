@@ -286,31 +286,38 @@ public class PlayerControls : MonoBehaviour
             RoadManager.instance.AddRoad(road);
         }
 
-        // Stop tracking building
+        // If the object is a building, give it to the building managers
+        if (selectedObject.TryGetComponent<Building>(out Building building))
+        {
+            BuildingManager.instance.AddBuilding(building);
+        }
+
+        // Stop tracking object
         isPlacingObject = false;
         selectedObject = null;
 
-        // If this is the first time placing the building, pay the cost of it
-        // Ideally this will allow the player to eventually move around buildings they've placed, without having to pay for it each time
+        // If this is the first time placing the object, pay the cost of it
+        // Ideally this will allow the player to eventually move around objects they've placed, without having to pay for it each time
         if (!objectScript.isPaidFor)
         {
-            PayForBuilding(objectScript);
-            GameObject statChange = Instantiate(statChangePrefab, rayHit.point, Quaternion.identity);
-            statChange.GetComponent<StatChangePopup>().SetArrow(false, "$" + objectScript.cost.ToString());
+            PayForObject(objectScript, rayHit.point);
         }
 
         // Audio
         buildSFX.Play();
     }
 
-    void PayForBuilding(PlaceableObject objectScript)
+    void PayForObject(PlaceableObject objectScript, Vector3 placedPosition)
     {
         // Remove the cost of the building from the player's money
         GameManager.instance.money -= objectScript.cost;
 
+        // Makes a GUI object appear that shows how much money the player just spent
+        GameObject statChange = Instantiate(statChangePrefab, placedPosition, Quaternion.identity);
+        statChange.GetComponent<StatChangePopup>().SetArrow(false, "-$" + objectScript.cost.ToString());
+
         /*
-         * Insert code for GUI here
-         * i.e. "-$50" text appears and slowly floats up + fades away, with a 'ca-ching' sound effect
+         * Insert 'ca-ching' sound effect
          */
 
         // Update the building's logic
