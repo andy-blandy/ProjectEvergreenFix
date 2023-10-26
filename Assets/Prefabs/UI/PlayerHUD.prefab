@@ -420,7 +420,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2991861704619150594}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -466,7 +466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &1266323028519090410
@@ -5608,7 +5608,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3343897634060521445}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -6241,7 +6241,7 @@ MonoBehaviour:
   warningColor: {r: 0.8962264, g: 0.61141926, b: 0.29310542, a: 1}
   dangerColor: {r: 0.9150943, g: 0, b: 0, a: 1}
   goodColor: {r: 0, g: 1, b: 0.4471252, a: 1}
-  editingMenu: {fileID: 0}
+  editingMenu: {fileID: 2991861704619150594}
   currentModeText: {fileID: 2184845657640727092}
   MissionsMenu: {fileID: 9078890920711380283}
   MissionsButton: {fileID: 6315358954782544834}

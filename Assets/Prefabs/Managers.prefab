@@ -134,56 +134,10 @@ Transform:
   m_Children:
   - {fileID: 7533900618762588980}
   - {fileID: 1858141698491047870}
-  - {fileID: 4049658664415332472}
   - {fileID: 2787648575433599791}
   - {fileID: 4799757502047505915}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4725173207832888284
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4049658664415332472}
-  - component: {fileID: 3655583769529178105}
-  m_Layer: 0
-  m_Name: TileManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4049658664415332472
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4725173207832888284}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2881904577484127116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3655583769529178105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4725173207832888284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab702e83d00f5549aa9ea9e9f12b86b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapHolder: {fileID: 0}
 --- !u!1 &6300429802579396671
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987940a0bf4f79d44a94cf9890c85e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridLayout: {fileID: 0}
+  mainTileMap: {fileID: 0}
+  whiteTile: {fileID: 0}
   currentControlMode: 
   isPlacingObject: 0
   selectedObject: {fileID: 0}
