@@ -22,6 +22,10 @@ public class DialogManager : MonoBehaviour
     public GameObject NextButton;
     public GameObject FinishButton;
 
+    //Audio
+    [Header("Audio")]
+    public AudioSource buttonSFX;
+
     //A list of sentences that the chatacters can say as 
     //well as the place in the list that the characters are
     private List<string> AlexSentences;
@@ -61,6 +65,8 @@ public class DialogManager : MonoBehaviour
     {
         if((AlexSentencePlace + 1) < AlexSentences.Count)
         {
+            // Audio
+            buttonSFX.Play();
             AlexSentencePlace += 1;
             if (AlexSentencePlace == 2 || 
                 AlexSentencePlace == 4 || 
@@ -99,6 +105,8 @@ public class DialogManager : MonoBehaviour
     //Hides alex and her dialogue box as well as incriments where she is in her dialogue by 1
     public void FinishTextDiaLogue()
     {
+        // Audio
+        buttonSFX.Play();
         Alex.SetActive(false);
         DialogueBackground.SetActive(false);
 
