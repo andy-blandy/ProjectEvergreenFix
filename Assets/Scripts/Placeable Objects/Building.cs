@@ -30,4 +30,5 @@ public class Building : PlaceableObject
         int resourceValue = 0;
         return resourceValue;
     }
+    public virtual void placed() { }
 }
