@@ -6,8 +6,6 @@
  * This script should control the flow of the entire game.
  * There's no use for it yet other than controlling the resources of the town
  * 
- * TO-DO:
- * - Add getter and setters for each stat
  */
 
 using System.Collections;

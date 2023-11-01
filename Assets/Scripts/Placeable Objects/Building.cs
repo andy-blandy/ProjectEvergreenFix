@@ -30,5 +30,7 @@ public class Building : PlaceableObject
         int resourceValue = 0;
         return resourceValue;
     }
+
+    // Method names should be capitalized
     public virtual void placed() { }
 }
