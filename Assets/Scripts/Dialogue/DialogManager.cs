@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// I'm not sure why this was made when an existing DialogueManager class already exists.
 public class DialogManager : MonoBehaviour
 { 
     //The characters that can pop up on the screen
