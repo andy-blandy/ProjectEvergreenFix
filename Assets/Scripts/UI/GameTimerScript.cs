@@ -7,25 +7,23 @@ public class GameTimerScript : MonoBehaviour
 {
     //This is the text that pops up on the screen
     [Header("Month and Year")]
-    public TextMeshProUGUI MonthTXT;
-    public TextMeshProUGUI YearTXT;
+    public TextMeshProUGUI monthTXT;
+    public TextMeshProUGUI yearTXT;
 
-    //This is the list of the months in the year as well as the year in an intager
+    //This is the list of the months in the year as well as the year in an integer
     private List<string> months = new List<string>();
-    private int year;
+    public int currentYear = 2023;
 
-    //This is the total amount of time that the game has been running
-    private float GameTimeTotal;
+    // This is the total amount of time that the game has been running
+    public float gameTimeTotal;
 
-    //This is the time in the game that the month last updated
-    private float LastUpdate;
+    // This is a place holder variable to tell which month in the year the player is in
+    public int monthPlace = 0;
 
-    //This is a place holder variable to tell which month in the year the play is in
-    private int MonthPlace = 0;
-
-    //This timer is how long a month will last in game time
-    [Header("Month Timer (In seconds)")]
-    public int monthTimer;
+    // This timer is how long a month will last in game time
+    [Header("Month Timer (in seconds)")]
+    public int monthTimer = 120;
+    public float monthCountdown;
 
     /// <summary>
     /// Initializing the variables in the previous sections
@@ -45,12 +43,12 @@ public class GameTimerScript : MonoBehaviour
         months.Add("Nov");
         months.Add("Dec");
 
-        monthTimer = 120;
+        // Set GUI
+        monthTXT.text = months[monthPlace];
+        yearTXT.text = currentYear.ToString();
 
-        MonthTXT.text = months[MonthPlace];
-
-        year = 2023;
-        YearTXT.text = year.ToString();
+        // Set timers
+        monthCountdown = monthTimer;
     }
 
     public void Update()
@@ -58,24 +56,30 @@ public class GameTimerScript : MonoBehaviour
 
         //This checks the if the Total game time minus the last update is the "month timer"
         //Then it changes the month that is displayed on the screen
-        if (GameTimeTotal - LastUpdate >= monthTimer)
+        if (monthCountdown <= 0)
         {
-            LastUpdate = GameTimeTotal;
+            UpdateMonth();
 
-            if (MonthPlace == 11)
-            {
-                MonthPlace = 0;
-                year += 1;
-                YearTXT.text = year.ToString();
-            }
-            else
-            {
-                MonthPlace++;
-            }
-
-            MonthTXT.text = months[MonthPlace];
+            monthCountdown = monthTimer;
         }
 
-        GameTimeTotal += Time.deltaTime;
+        gameTimeTotal += Time.deltaTime;
+        monthCountdown -= Time.deltaTime;
+    }
+
+    private void UpdateMonth()
+    {
+        if (monthPlace == 11)
+        {
+            monthPlace = 0;
+            currentYear += 1;
+            yearTXT.text = currentYear.ToString();
+        }
+        else
+        {
+            monthPlace++;
+        }
+
+        monthTXT.text = months[monthPlace];
     }
 }

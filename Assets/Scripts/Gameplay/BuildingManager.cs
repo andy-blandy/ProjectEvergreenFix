@@ -12,6 +12,11 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
+    [Header("Graphics")]
+    public Material errorMaterial;
+    public Material guideMaterial;
+
+
     [SerializeField] private List<Building> placedBuildings;
 
     public static BuildingManager instance;
@@ -31,6 +36,46 @@ public class BuildingManager : MonoBehaviour
     public void AddBuilding(Building buildingToAdd)
     {
         placedBuildings.Add(buildingToAdd);
+        GameManager.instance.neededPower += buildingToAdd.powerCost;
+
+        if (GameManager.instance.neededPower <= GameManager.instance.availablePower)
+        {
+            buildingToAdd.isPowered = true;
+            buildingToAdd.Placed();
+        }
+    }
+
+    public void PowerDownBuildings()
+    {
+        foreach (Building building in placedBuildings)
+        {
+            building.isPowered = false;
+        }
+    }
+
+    public void PowerUpBuildings()
+    {
+        foreach (Building building in placedBuildings)
+        {
+            building.isPowered = true;
+        }
+    }
+
+    /// <summary>
+    /// Iterates through every buildng in the placedBuildings list and calculates the total of all the buildings' power cost. Then, the neededPower stat in the active game manager is set
+    /// to this total.
+    /// </summary>
+    /// <returns></returns>
+    public void UpdateNeededPower()
+    {
+        int totalNeededPower = 0;
+
+        foreach (Building building in placedBuildings)
+        {
+            totalNeededPower += building.powerCost;
+        }
+        
+        GameManager.instance.neededPower = totalNeededPower;
     }
 
     /// <summary>

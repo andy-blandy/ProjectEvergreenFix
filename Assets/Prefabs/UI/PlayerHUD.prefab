@@ -729,9 +729,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b89bd44915498e4191be218bee2b900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonthTXT: {fileID: 5576806266636349174}
-  YearTXT: {fileID: 3508181112554186396}
-  monthTimer: 0
+  monthTXT: {fileID: 5576806266636349174}
+  yearTXT: {fileID: 3508181112554186396}
+  currentYear: 2023
+  gameTimeTotal: 0
+  monthPlace: 0
+  monthTimer: 120
 --- !u!1 &1266323028519090410
 GameObject:
   m_ObjectHideFlags: 0
@@ -6636,6 +6639,7 @@ MonoBehaviour:
   populationText: {fileID: 8763896142000701430}
   happinessText: {fileID: 9167891617698707360}
   moneyText: {fileID: 6579418714317660961}
+  powerText: {fileID: 0}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   warningColor: {r: 0.8962264, g: 0.61141926, b: 0.29310542, a: 1}
   dangerColor: {r: 0.9150943, g: 0, b: 0, a: 1}

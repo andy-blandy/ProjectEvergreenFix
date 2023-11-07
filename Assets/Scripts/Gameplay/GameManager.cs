@@ -16,16 +16,18 @@ public class GameManager : MonoBehaviour
 {
     public Camera gameCamera;
 
-    [Header("Static Resources")]
+    [Header("Town Stats")]
     public int money = 1000;
     public int happiness;
     public int citizens;
     public int envImpact;
-    public int power;
-
-    [Header("Dynamic Resources")]
+    public int availablePower;
+    public int neededPower;
     public int jobs;
     public int populationCapacity;
+
+    [Header("Town States")]
+    public bool inBlackout;
 
 
     // Singleton
@@ -35,15 +37,31 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
-        
+        CheckPower();
     }
+
+    void BeginGame()
+    {
+        inBlackout = false;
+    }
+
+    public void CheckPower()
+    {
+        if (availablePower < neededPower && !inBlackout)
+        {
+            inBlackout = true;
+            BuildingManager.instance.PowerDownBuildings();
+        }
+        else if (availablePower >= neededPower && inBlackout)
+        {
+            inBlackout = false;
+            BuildingManager.instance.PowerUpBuildings();
+        }
+    }
+
+    #region Getters and Setters
     public int getMoney()
     {
         return money;
@@ -62,7 +80,7 @@ public class GameManager : MonoBehaviour
     }
     public int getPower()
     {
-        return power;
+        return availablePower;
     }
     public int getJobs()
     {
@@ -111,11 +129,11 @@ public class GameManager : MonoBehaviour
 
     public void addPower(int newPower)
     {
-        power += newPower;
+        availablePower += newPower;
     }
     public void subtractPower(int loss)
     {
-        power -= loss;
+        availablePower -= loss;
     }
 
     public void addJobs(int newJobs)
@@ -135,4 +153,5 @@ public class GameManager : MonoBehaviour
     {
         populationCapacity -= loss;
     }
+    #endregion
 }

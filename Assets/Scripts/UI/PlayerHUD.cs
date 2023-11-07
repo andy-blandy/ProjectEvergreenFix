@@ -23,6 +23,7 @@ public class PlayerHUD : MonoBehaviour
     public TextMeshProUGUI populationText;
     public TextMeshProUGUI happinessText;
     public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI powerText;
 
     [Header("Resource UI: Visuals")]
     [SerializeField] private Color defaultColor;
@@ -98,6 +99,9 @@ public class PlayerHUD : MonoBehaviour
 
         /// Happiness
         happinessText.text = gameManager.happiness.ToString();
+
+        /// Power
+        powerText.text = gameManager.availablePower.ToString();
 
         // Set the color of the happiness value based on the happiness level
         // If negative, set to the danger color. If positive, set to the good color.

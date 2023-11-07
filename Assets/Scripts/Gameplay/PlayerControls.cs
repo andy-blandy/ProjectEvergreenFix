@@ -273,6 +273,7 @@ public class PlayerControls : MonoBehaviour
         // Do nothing if the mouse is not clicking the ground, or if the building is currently colliding with another object
         if (rayHit.collider == null || objectScript.isColliding || !mainTileMap.HasTile(convertedMousePosition))
         {
+            Debug.Log("Ray hit: " + (rayHit.collider != null) + ", Object Colliding: " + objectScript.isColliding + ", Tile In Location: " + mainTileMap.HasTile(convertedMousePosition));
             return;
         }
 
@@ -289,6 +290,7 @@ public class PlayerControls : MonoBehaviour
         // If the object is a building, give it to the building managers
         if (selectedObject.TryGetComponent<Building>(out Building building))
         {
+            Debug.Log(building.objectName);
             BuildingManager.instance.AddBuilding(building);
         }
 

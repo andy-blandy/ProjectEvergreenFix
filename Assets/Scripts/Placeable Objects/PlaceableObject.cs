@@ -26,10 +26,11 @@ public class PlaceableObject : MonoBehaviour
     public bool isPlaced;
 
     [Header("Graphics")]
-    public MeshRenderer[] modelMeshRenderer;
-    public Material[] placedMaterial;
-    public Material errorMaterial;
-    public Material guideMaterial;
+    public GameObject model;
+    public MeshRenderer[] modelMeshRenderers;
+    public List<List<Material>> placedMaterials;
+    public List<List<Material>> guideMaterials;
+    public List<List<Material>> errorMaterials;
 
     [Header("Collision Detection")]
     public bool isColliding;
@@ -37,24 +38,56 @@ public class PlaceableObject : MonoBehaviour
 
     void Awake()
     {
-        
-    }
+        model = transform.GetChild(0).gameObject;
+        modelMeshRenderers = model.GetComponentsInChildren<MeshRenderer>();
 
-    void Start()
-    {
-        
-    }
+        placedMaterials = new List<List<Material>>();
+        guideMaterials = new List<List<Material>>();
+        errorMaterials = new List<List<Material>>();
 
-    void Update()
-    {
-        
+        // This will probably cause a lot of problems eventually
+        for (int i = 0; i < modelMeshRenderers.Length; i++)
+        {
+            // Get the original materials of the model
+            placedMaterials.Add(new List<Material>());
+            modelMeshRenderers[i].GetMaterials(placedMaterials[i]);
+
+            // Set-up the guide materials and error materials
+            // These lists need the same number of materials as the placedMaterials list, which is why we use a for loop.
+            guideMaterials.Add(new List<Material>());
+            errorMaterials.Add(new List<Material>());
+            for (int j = 0; j < placedMaterials[i].Count; j++)
+            {
+                guideMaterials[i].Add(BuildingManager.instance.guideMaterial);
+                errorMaterials[i].Add(BuildingManager.instance.errorMaterial);
+            }
+        }
+
+
+
     }
 
     public void SetModelToGuide()
     {
-        foreach (MeshRenderer meshRenderer in modelMeshRenderer)
+        for (int i = 0; i < modelMeshRenderers.Length; i++)
         {
-            meshRenderer.SetMaterials(new List<Material>() { guideMaterial });
+            modelMeshRenderers[i].SetMaterials(guideMaterials[i]);
+        }
+    }
+
+    public void SetModelToError()
+    {
+        for (int i = 0; i < modelMeshRenderers.Length; i++)
+        {
+            modelMeshRenderers[i].SetMaterials(errorMaterials[i]);
+        }
+    }
+
+    public void SetModelToPlaced()
+    {
+        for (int i = 0; i < modelMeshRenderers.Length; i++)
+        {
+            modelMeshRenderers[i].SetMaterials(placedMaterials[i]);
         }
     }
 
@@ -70,10 +103,8 @@ public class PlaceableObject : MonoBehaviour
         // If the building's collider is touching another collider, don't allow the player to place the object
         currentCollider = other;
         isColliding = true;
-        foreach (MeshRenderer meshRenderer in modelMeshRenderer)
-        {
-            meshRenderer.SetMaterials(new List<Material>() { errorMaterial });
-        }
+
+        SetModelToError();
     }
 
     private void OnTriggerExit(Collider other)
@@ -89,10 +120,7 @@ public class PlaceableObject : MonoBehaviour
         {
             currentCollider = null;
             isColliding = false;
-            foreach (MeshRenderer meshRenderer in modelMeshRenderer)
-            {
-                meshRenderer.SetMaterials(new List<Material>() { guideMaterial });
-            }
+            SetModelToGuide();
         }
     }
     #endregion
@@ -107,10 +135,7 @@ public class PlaceableObject : MonoBehaviour
         Destroy(GetComponent<Rigidbody>());
 
         // Update the model
-        for (int i = 0; i < modelMeshRenderer.Length; i++)
-        {
-            modelMeshRenderer[i].SetMaterials(new List<Material>() { placedMaterial[i] });
-        }
+        SetModelToPlaced();
 
         OnPlace();
     }
