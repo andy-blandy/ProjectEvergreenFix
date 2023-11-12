@@ -32,43 +32,52 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] private Color goodColor;
 
     [Header("Editing")]
+    public bool isEditOpen;
     public GameObject editingMenu;
-    public TextMeshProUGUI currentModeText;
-    public static PlayerHUD instance;
-    public GameObject MissionsMenu;
-    public GameObject MissionsButton;
-    public GameObject EditingMenuButton;
-    public GameObject EditingMenuPopup;
-    public GameObject PlaceMenu;
-    public GameObject ExitPlaceMenuButton;
+    public GameObject editingMenuButton;
+    public GameObject editingMenuPopup;
+
+    [Header("Placing")]
+    public bool isPlaceOpen;
+    public GameObject placeMenu;
 
     [Header("Audio")]
     public AudioSource missionsMenuSFX;
     public AudioSource editMenuSFX;
     public AudioSource buttonSFX;
 
+    [Header("Missions")]
+    public bool isMissionsOpen;
+    public GameObject missionsMenu;
+    public GameObject MissionsButton;
+
+    public static PlayerHUD instance;
+
     void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
+        SetMenus();
     }
 
     void Update()
     {
         // Update UI
         UpdateResourceGUI();
+    }
 
-        // Open the editing menu if "Escape" is pressed
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (editingMenu.activeSelf)
-            {
-                editingMenu.SetActive(false);
-                PlayerControls.instance.SwitchMode("move");
-            } else
-            {
-                editingMenu.SetActive(true);
-            }
-        }
+    void SetMenus()
+    {
+        missionsMenu.SetActive(false);
+        editingMenuPopup.SetActive(false);
+        placeMenu.SetActive(false);
+
+        isMissionsOpen = false;
+        isEditOpen = false;
+        isPlaceOpen = false;
     }
 
     /// <summary>
@@ -95,7 +104,7 @@ public class PlayerHUD : MonoBehaviour
         }
 
         /// Population
-        populationText.text = gameManager.citizens.ToString();
+        populationText.text = gameManager.population.ToString();
 
         /// Happiness
         happinessText.text = gameManager.happiness.ToString();
@@ -121,82 +130,112 @@ public class PlayerHUD : MonoBehaviour
         moneyText.text = gameManager.money.ToString();
     }
 
+    public void SwapMenu(GameObject chosenButton)
+    {
+        string chosenMenu = chosenButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+
+        switch (chosenMenu) 
+        {
+            case "Place":
+                ShowPlaceMenu(true);
+                PlayerControls.instance.SwitchMode("place");
+                break;
+            case "Move":
+                ShowPlaceMenu(false);
+                PlayerControls.instance.SwitchMode("move");
+                break;
+            case "Destroy":
+                ShowPlaceMenu(false);
+                PlayerControls.instance.SwitchMode("destroy");
+                break;
+            default:
+                break;
+        }
+
+        SwapButtons(chosenButton, editingMenuButton);
+        ShowEditMenu();
+    }
+
+    public void SwapButtons(GameObject buttonOne, GameObject buttonTwo)
+    {
+        Image imageOne = buttonOne.GetComponent<Image>();
+        Image imageTwo = buttonTwo.GetComponent<Image>();
+        TextMeshProUGUI textOne = buttonOne.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI textTwo = buttonTwo.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        Sprite tempSprite = imageOne.sprite;
+        string tempText = textOne.text;
+        imageOne.sprite = imageTwo.sprite;
+        textOne.text = textTwo.text;
+        imageTwo.sprite = tempSprite;
+        textTwo.text = tempText;
+    }
+
 
     public void ShowMissionsMenu()
     {
-        MissionsMenu.SetActive(true);
-        MissionsButton.SetActive(false);
-        if (EditingMenuPopup.activeInHierarchy == true)
+        if (isMissionsOpen)
         {
-            HideEditMenu();
-        }
-        // Audio
-        missionsMenuSFX.Play();
-    }
+            missionsMenu.SetActive(false);
 
-    public void HideMissionsMenu()
-    {
-        MissionsMenu.SetActive(false);
-        MissionsButton.SetActive(true);
-        // Audio
-        buttonSFX.Play();
+            // Audio
+            buttonSFX.Play();
+        } else
+        {
+            missionsMenu.SetActive(true);
+
+            // Audio
+            missionsMenuSFX.Play();
+
+        }
+
+        isMissionsOpen = !isMissionsOpen;
     }
 
     public void ShowEditMenu()
     {
-        EditingMenuButton.SetActive(false);
-        EditingMenuPopup.SetActive(true);
-        if (MissionsMenu.activeInHierarchy == true)
+        if (!isEditOpen)
         {
-            HideMissionsMenu();
+            editingMenuPopup.SetActive(true);
+
+            // Audio
+            editMenuSFX.Play();
+
+        } else
+        {
+            editingMenuPopup.SetActive(false);
+
+            // Audio
+            buttonSFX.Play();
         }
 
-        if (PlaceMenu.activeInHierarchy == true)
-        {
-            PlaceMenu.SetActive(false);        }
-        // Audio
-        editMenuSFX.Play();
+        isEditOpen = !isEditOpen;
     }
 
-    public void HideEditMenu()
+    public void ShowPlaceMenu(bool open)
     {
-        EditingMenuButton.SetActive(true);
-        EditingMenuPopup.SetActive(false);
+        placeMenu.SetActive(open);
 
-        if (PlaceMenu.activeInHierarchy == true)
-        {
-            EditingMenuButton.SetActive(false);
-        }
-        // Audio
-        buttonSFX.Play();
+        isPlaceOpen = !isPlaceOpen;
     }
 
     public void HideAllMenus()
     {
-        if (MissionsMenu.activeInHierarchy == true)
+        if (missionsMenu.activeInHierarchy == true)
         {
-            MissionsMenu.SetActive(false);
+            missionsMenu.SetActive(false);
         }
         if (editingMenu.activeInHierarchy == true)
         {
             editingMenu.SetActive(false);
         }
-        if (EditingMenuPopup.activeInHierarchy == true)
+        if (editingMenuPopup.activeInHierarchy == true)
         {
-            EditingMenuPopup.SetActive(false);
+            editingMenuPopup.SetActive(false);
         }
-        if (PlaceMenu.activeInHierarchy == true)
+        if (placeMenu.activeInHierarchy == true)
         {
-            PlaceMenu.SetActive(false);
+            placeMenu.SetActive(false);
         }
-        if (ExitPlaceMenuButton.activeInHierarchy == true)
-        {
-            ExitPlaceMenuButton.SetActive(false);
-        }
-    }
-
-    public void DisplayExitButton()
-    {
-        ExitPlaceMenuButton.SetActive(true);
     }
 }

@@ -54,14 +54,15 @@ MonoBehaviour:
   isPaidFor: 0
   isPlaced: 0
   model: {fileID: 0}
-  modelMeshRenderer: {fileID: 0}
-  placedMaterials: []
-  errorMaterial: {fileID: 2100000, guid: 2cf52855490ce0944b2951f1f673584d, type: 2}
-  guideMaterial: {fileID: 2100000, guid: 0686f5ad289a7ea43b77501d265d90b5, type: 2}
+  modelMeshRenderers: []
   isColliding: 0
   isConnectedToRoads: 0
   isPowered: 1
+  type: 0
   powerCost: 1
+  jobs: 100
+  impact: 20
+  powerGenerated: 1000
 --- !u!54 &2481119573438543536
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -108,7 +109,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.02, y: 1, z: 2.41}
+  m_Size: {x: 2.02, y: 0.9, z: 2.41}
   m_Center: {x: -0.13, y: 0.5, z: 0}
 --- !u!1001 &6780737977893873414
 PrefabInstance:

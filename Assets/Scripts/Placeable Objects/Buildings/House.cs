@@ -8,6 +8,11 @@ public class House : Building
     public int popIncrease = 4;
     //int powerCost = 10;
 
+    void Awake()
+    {
+        type = BuildingType.House;
+    }
+
     public override void Placed()
     {
         if (isPowered == true)

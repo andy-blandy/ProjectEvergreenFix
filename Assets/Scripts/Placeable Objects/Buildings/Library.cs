@@ -7,6 +7,11 @@ public class Library : Building
     public int happiness = 10;
     public int jobs = 20;
 
+    void Awake()
+    {
+        type = BuildingType.Library;
+    }
+
     public override void Placed()
     {
         if (isPowered == true)

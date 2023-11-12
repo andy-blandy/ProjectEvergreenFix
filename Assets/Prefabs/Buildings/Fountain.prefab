@@ -53,14 +53,14 @@ MonoBehaviour:
   uiIcon: {fileID: 0}
   isPaidFor: 0
   isPlaced: 0
-  modelMeshRenderer: []
-  placedMaterial: []
-  errorMaterial: {fileID: 0}
-  guideMaterial: {fileID: 0}
+  model: {fileID: 0}
+  modelMeshRenderers: []
   isColliding: 0
   isConnectedToRoads: 0
   isPowered: 1
+  type: 0
   powerCost: 1
+  environmentalImpact: 1
 --- !u!54 &5371808963234259106
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.7, y: 0.25, z: 1.7}
+  m_Size: {x: 1.7, y: 0.075, z: 1.7}
   m_Center: {x: 0.13, y: 0.11, z: 0.04}
 --- !u!1001 &8311865817914696135
 PrefabInstance:

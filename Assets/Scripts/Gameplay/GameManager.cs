@@ -16,15 +16,26 @@ public class GameManager : MonoBehaviour
 {
     public Camera gameCamera;
 
+    public enum Stats
+    {
+        Money,
+        Happiness,
+        Population,
+        Environment,
+        AvailablePower,
+        Jobs
+    }
+
     [Header("Town Stats")]
     public int money = 1000;
     public int happiness;
-    public int citizens;
     public int envImpact;
     public int availablePower;
     public int neededPower;
     public int jobs;
+    public int population;
     public int populationCapacity;
+    public Dictionary<Stats, int> townStats;
 
     [Header("Town States")]
     public bool inBlackout;
@@ -35,6 +46,19 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        townStats = new Dictionary<Stats, int>();
+    }
+
+    void Start()
+    {
+        townStats.Add(Stats.Money, money);
+        townStats.Add(Stats.Happiness, happiness);
+        townStats.Add(Stats.Population, population);
+        townStats.Add(Stats.Environment, envImpact);
+        townStats.Add(Stats.AvailablePower, availablePower);
+        townStats.Add(Stats.Jobs, jobs);
+
     }
 
     void Update()
@@ -72,7 +96,7 @@ public class GameManager : MonoBehaviour
     }
     public int getCitizens()
     {
-        return citizens;
+        return population;
     }
     public int getEnvImpact()
     {
@@ -111,11 +135,11 @@ public class GameManager : MonoBehaviour
 
     public void addCitizens(int newCitizens)
     {
-        citizens += newCitizens;
+        population += newCitizens;
     }
     public void subtractCitizens(int loss)
     {
-        citizens -= loss;
+        population -= loss;
     }
 
     public void addImpact(int newImpact)

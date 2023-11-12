@@ -16,8 +16,12 @@ public class BuildingManager : MonoBehaviour
     public Material errorMaterial;
     public Material guideMaterial;
 
-
+    [Header("Game Logic")]
     [SerializeField] private List<Building> placedBuildings;
+
+    // Events
+    public delegate void BuildingPlaced(Building placedBuilding);
+    public static event BuildingPlaced OnBuildingPlaced;
 
     public static BuildingManager instance;
 
@@ -35,9 +39,16 @@ public class BuildingManager : MonoBehaviour
     /// <param name="buildingToAdd"></param>
     public void AddBuilding(Building buildingToAdd)
     {
+        // Add to list of buildings
         placedBuildings.Add(buildingToAdd);
-        GameManager.instance.neededPower += buildingToAdd.powerCost;
 
+        if (OnBuildingPlaced != null)
+        {
+            OnBuildingPlaced(buildingToAdd);
+        }
+
+        // Power
+        GameManager.instance.neededPower += buildingToAdd.powerCost;
         if (GameManager.instance.neededPower <= GameManager.instance.availablePower)
         {
             buildingToAdd.isPowered = true;

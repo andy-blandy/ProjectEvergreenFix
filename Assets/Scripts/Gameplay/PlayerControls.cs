@@ -159,9 +159,6 @@ public class PlayerControls : MonoBehaviour
         {
             DeselectObject();
         }
-
-        // Update UI
-        PlayerHUD.instance.currentModeText.text = currentControlMode;
     }
 
     /// <summary>

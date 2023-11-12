@@ -6,6 +6,11 @@ public class SolarFarm : Building
 {
     public int power = 10;
 
+    void Awake()
+    {
+        type = BuildingType.SolarFarm;
+    }
+
     public override void Placed()
     {
         Debug.Log("SOLAR PLACED");
