@@ -40,7 +40,6 @@ public class PlayerControls : MonoBehaviour
     [Range(1, 90)] public int rotationAmount = 45;
 
     [Header("GUI")]
-    public GameObject placeMenu;
     public GameObject statChangePrefab;
 
     [Header("Audio")]
@@ -146,22 +145,11 @@ public class PlayerControls : MonoBehaviour
     {
         currentControlMode = modeChoice;
 
-        if (modeChoice != "place")
-        {
-            placeMenu.SetActive(false);
-        } else
-        {
-            placeMenu.SetActive(true);
-        }
-
         // If needed, delete selected building
         if (isPlacingObject)
         {
             DeselectObject();
         }
-
-        // Update UI
-        PlayerHUD.instance.currentModeText.text = currentControlMode;
     }
 
     /// <summary>

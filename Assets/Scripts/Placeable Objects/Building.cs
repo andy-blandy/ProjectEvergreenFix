@@ -16,12 +16,23 @@ public class Building : PlaceableObject
     [Header("States")]
     public bool isConnectedToRoads;
     public bool isPowered = true;
+    public BuildingType type;
 
     [Header("Resources")]
     public Dictionary<string, int> resources;
 
     [Header("Stats")]
     public int powerCost = 1;
+
+    public enum BuildingType 
+    {
+        Factory, 
+        Fountain,
+        House,
+        Library,
+        OfficeBuilding,
+        SolarFarm
+    }
 
     /// <summary>
     /// Each building will produce a resource for the player. This function will return the appropriate resource.
