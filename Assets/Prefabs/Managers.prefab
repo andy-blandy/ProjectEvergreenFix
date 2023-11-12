@@ -47,12 +47,14 @@ MonoBehaviour:
   gameCamera: {fileID: 0}
   money: 1000
   happiness: 0
-  citizens: 20
   envImpact: 0
-  power: 0
+  availablePower: 0
+  neededPower: 0
   jobs: 0
+  population: 0
   populationCapacity: 0
---- !u!1 &2620339889273952264
+  inBlackout: 0
+--- !u!1 &1354115468195227039
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,49 +62,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4799757502047505915}
-  - component: {fileID: 6563049624767894574}
+  - component: {fileID: 4368752119081019982}
+  - component: {fileID: 2145883510896436245}
   m_Layer: 0
-  m_Name: DialogManager
+  m_Name: BuildingManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4799757502047505915
+--- !u!4 &4368752119081019982
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2620339889273952264}
+  m_GameObject: {fileID: 1354115468195227039}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2881904577484127116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6563049624767894574
+--- !u!114 &2145883510896436245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2620339889273952264}
+  m_GameObject: {fileID: 1354115468195227039}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f702f6a451b8ce44ba71ca0d7411426, type: 3}
+  m_Script: {fileID: 11500000, guid: ea7e9ca7c529150409b1ca962ced2569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Alex: {fileID: 0}
-  Cassius: {fileID: 0}
-  Lily: {fileID: 0}
-  DialogueBackground: {fileID: 0}
-  DiaBox: {fileID: 0}
-  NextButton: {fileID: 0}
-  FinishButton: {fileID: 0}
+  errorMaterial: {fileID: 2100000, guid: 2cf52855490ce0944b2951f1f673584d, type: 2}
+  guideMaterial: {fileID: 2100000, guid: 0686f5ad289a7ea43b77501d265d90b5, type: 2}
+  placedBuildings: []
 --- !u!1 &3443047320437547485
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +133,7 @@ Transform:
   - {fileID: 7533900618762588980}
   - {fileID: 1858141698491047870}
   - {fileID: 2787648575433599791}
-  - {fileID: 4799757502047505915}
+  - {fileID: 4368752119081019982}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6300429802579396671
@@ -496,7 +494,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6300429802579396671}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: bf2f56074fd1d7244a98f91483783e9b, type: 3}
