@@ -13,11 +13,6 @@ public class Road : PlaceableObject
     public delegate void RoadPlacedAction();
     //public event RoadPlacedAction OnRoadPlaced;
 
-    void Awake()
-    {
-
-    }
-
     void CheckForConnections()
     {
         bool[] isConnected = new bool[connectors.Length];

@@ -6,7 +6,7 @@ public class SolarFarm : Building
 {
     public int power = 10;
 
-    void Awake()
+    void Start()
     {
         type = BuildingType.SolarFarm;
     }

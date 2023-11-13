@@ -7,7 +7,7 @@ public class Library : Building
     public int happiness = 10;
     public int jobs = 20;
 
-    void Awake()
+    void Start()
     {
         type = BuildingType.Library;
     }

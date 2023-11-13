@@ -8,7 +8,7 @@ public class OfficeBuilding : Building
     public int jobs = 50;
     public int impact = 5;
 
-    void Awake()
+    void Start()
     {
         type = BuildingType.OfficeBuilding;
     }

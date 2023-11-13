@@ -62,9 +62,6 @@ public class PlaceableObject : MonoBehaviour
                 errorMaterials[i].Add(BuildingManager.instance.errorMaterial);
             }
         }
-
-
-
     }
 
     public void SetModelToGuide()

@@ -275,10 +275,9 @@ public class PlayerControls : MonoBehaviour
             RoadManager.instance.AddRoad(road);
         }
 
-        // If the object is a building, give it to the building managers
+        // If the object is a building, give it to the building manager
         if (selectedObject.TryGetComponent<Building>(out Building building))
         {
-            Debug.Log(building.objectName);
             BuildingManager.instance.AddBuilding(building);
         }
 
