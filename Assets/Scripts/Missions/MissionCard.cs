@@ -47,7 +47,6 @@ public class MissionCard : MonoBehaviour
 
     public void UpdateTask(Task task)
     {
-        Debug.Log(task.orderInMission);
         taskText[task.orderInMission].text = task.description;
         taskToggles[task.orderInMission].isOn = task.isTaskComplete;
     }

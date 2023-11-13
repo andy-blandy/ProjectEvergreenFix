@@ -6,7 +6,6 @@ public class Task : MonoBehaviour
 {
     public string description;
     public bool isTaskComplete;
-    public bool isActive;
     public int orderInMission;
     public Mission parentMission;
 
