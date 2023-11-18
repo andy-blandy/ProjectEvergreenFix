@@ -18,19 +18,16 @@ public class MissionCard : MonoBehaviour
 
     public Mission connectedMission;
 
-    void Start()
-    {
-        SetCard(connectedMission);
-    }
-
     public void SetCard(Mission mission)
     {
+        // Logic
         connectedMission = mission;
+        mission.card = this;
 
+        // UI
         titleText.text = mission.title;
         rewardText.text = mission.rewardDescription;
-
-        SetTasks();
+        missionIconImage.sprite = mission.missionIcon;
     }
 
     public void SetTasks()
@@ -38,10 +35,10 @@ public class MissionCard : MonoBehaviour
         //taskToggles = new List<Toggle>();
         //taskText = new List<TextMeshProUGUI>();
 
-        for (int i = 0; i < connectedMission.tasks.Length; i++)
+        for (int i = 0; i < connectedMission.m_tasks.Count; i++)
         {
-            connectedMission.tasks[i].orderInMission = i;
-            UpdateTask(connectedMission.tasks[i]);
+            connectedMission.m_tasks[i].orderInMission = i;
+            UpdateTask(connectedMission.m_tasks[i]);
         }
     }
 

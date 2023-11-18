@@ -25,6 +25,12 @@ public class GameTimerScript : MonoBehaviour
     public int monthTimer = 120;
     public float monthCountdown;
 
+    public static GameTimerScript instance;
+    void Awake()
+    {
+        instance = this;
+    }
+
     /// <summary>
     /// Initializing the variables in the previous sections
     /// </summary>

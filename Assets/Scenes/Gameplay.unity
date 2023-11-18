@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &18092826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7002686607568135313, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+  m_PrefabInstance: {fileID: 6748791352389166969}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &25689161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -247,6 +252,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7311883176742013413, guid: 1747cf25d72f91f4e9b747850076f467, type: 3}
   m_PrefabInstance: {fileID: 41796995}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+--- !u!1 &51184754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2907990785739470014, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+  m_PrefabInstance: {fileID: 6748791352389166969}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &262569866 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1641286922293324553, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+  m_PrefabInstance: {fileID: 6748791352389166969}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &262569868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262569866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f32f11b635d053748b5f7b56cfeac474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inDialogue: 0
+  currentDialogue:
+    sentences: []
+    name: 
+    character: 0
+  dt: {fileID: 0}
+  Lily: {fileID: 51184754}
+  Alexandra: {fileID: 18092826}
+  Cassius: {fileID: 1889083341}
+  nextButton: {fileID: 1610771618}
+  dialogueBox: {fileID: 1413169378}
+  textbox: {fileID: 2133977956}
+  buttonSFX: {fileID: 0}
+>>>>>>> Stashed changes
 --- !u!1001 &263066217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1053,6 +1096,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7311883176742013413, guid: 1747cf25d72f91f4e9b747850076f467, type: 3}
   m_PrefabInstance: {fileID: 1367871473}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+--- !u!1 &1413169378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6897075947102470567, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+  m_PrefabInstance: {fileID: 6748791352389166969}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> Stashed changes
 --- !u!1001 &1441692558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1292,6 +1343,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7311883176742013413, guid: 1747cf25d72f91f4e9b747850076f467, type: 3}
   m_PrefabInstance: {fileID: 1543366488}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+--- !u!1 &1610771618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5295830135526736332, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+  m_PrefabInstance: {fileID: 6748791352389166969}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> Stashed changes
 --- !u!1001 &1888359892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1354,6 +1413,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7311883176742013413, guid: 1747cf25d72f91f4e9b747850076f467, type: 3}
   m_PrefabInstance: {fileID: 1888359892}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+--- !u!1 &1889083341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3405092923079666088, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+  m_PrefabInstance: {fileID: 6748791352389166969}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1907143869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1907143870}
+  - component: {fileID: 1907143871}
+  m_Layer: 0
+  m_Name: MissionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1907143870
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907143869}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6363009595311722364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1907143871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907143869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed62f67b51ac88442a6649b9150bf66c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allMissions:
+  - {fileID: 11400000, guid: a7a00d4967a50a641a70d5ad89760ea8, type: 2}
+  queuedMission: {fileID: 0}
+  missionCardPrefab: {fileID: 948794373227904489, guid: 794d52ec1f814a24d96b64615ba894ca, type: 3}
+  missionMenuPopup: {fileID: 0}
+>>>>>>> Stashed changes
 --- !u!1001 &2005557356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1540,6 +1656,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7311883176742013413, guid: 1747cf25d72f91f4e9b747850076f467, type: 3}
   m_PrefabInstance: {fileID: 2115582261}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2133977956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5933329893024014265, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+  m_PrefabInstance: {fileID: 6748791352389166969}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &142404897343032323
 GameObject:
   m_ObjectHideFlags: 0
@@ -4122,9 +4249,17 @@ PrefabInstance:
       objectReference: {fileID: 2163202336844490645}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2881904577484127116, guid: 8a08c4067b98c6a4380c60e4b67060a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1907143870}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a08c4067b98c6a4380c60e4b67060a4, type: 3}
+--- !u!4 &6363009595311722364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2881904577484127116, guid: 8a08c4067b98c6a4380c60e4b67060a4, type: 3}
+  m_PrefabInstance: {fileID: 6363009595311722363}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6748791352389166969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4133,6 +4268,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2962499221163359234, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 262569868}
+    - target: {fileID: 2962499221163359234, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: NextSentence
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962499221163359234, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DialogueManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3377247234208729281, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4220,7 +4367,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
+<<<<<<< Updated upstream
     m_AddedComponents: []
+=======
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1641286922293324553, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 262569868}
+>>>>>>> Stashed changes
   m_SourcePrefab: {fileID: 100100000, guid: 2c5c03024f9a3424eacd8b5bbf6e7389, type: 3}
 --- !u!4 &7141472806753702438
 Transform:

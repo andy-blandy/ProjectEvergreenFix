@@ -19,4 +19,10 @@ public class StatTask : Task
             IncompleteTask();
         }
     }
+
+    public override void SpecificCopy(TaskObject obj)
+    {
+        watchedStat = obj.watchedStat;
+        reqLevelOfStat = obj.reqLevelOfStat;
+    }
 }

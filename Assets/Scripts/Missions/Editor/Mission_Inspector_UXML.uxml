@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Label tabindex="-1" text="Tasks" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; color: rgb(255, 255, 255);" />
+    <uie:PropertyField binding-path="taskObjects" name="Tasks" style="height: auto; width: auto; max-width: 100%; max-height: 100%;" />
+    <ui:GroupBox name="UI" style="-unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 10px;">
+        <ui:Label tabindex="-1" text="UI" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: normal; -unity-font: initial; font-size: 14px; color: rgb(255, 255, 255); border-bottom-width: 0; -unity-text-align: upper-center;" />
+        <ui:TextField picking-mode="Ignore" label="Mission Name" name="Name" binding-path="title" style="align-items: center;" />
+        <uie:ObjectField label="Mission Icon" name="Icon" type="UnityEngine.Sprite, UnityEngine.CoreModule" allow-scene-objects="true" binding-path="missionIcon" style="height: 30px;" />
+        <ui:TextField picking-mode="Ignore" label="Reward Description" name="Reward" binding-path="rewardDescription" />
+    </ui:GroupBox>
+    <ui:GroupBox name="Dialogue" style="margin-top: 10px;">
+        <ui:Label tabindex="-1" text="Dialogue" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; color: rgb(255, 255, 255);" />
+        <uie:PropertyField name="Intro" binding-path="introDialogue" label="Intro Dialogue" />
+        <uie:PropertyField name="Closing" binding-path="completeDialogue" label="Ending Dialogue" />
+    </ui:GroupBox>
+    <ui:TreeView view-data-key="unity-tree-view" focusable="true" />
+</ui:UXML>

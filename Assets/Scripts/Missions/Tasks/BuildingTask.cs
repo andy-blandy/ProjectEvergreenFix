@@ -37,4 +37,10 @@ public class BuildingTask : Task
             }
         }
     }
+
+    public override void SpecificCopy(TaskObject obj)
+    {
+        requiredBuilding = obj.reqBuilding;
+        numOfBuildingsNeeded = obj.numOfBuildingsNeeded;
+    }
 }

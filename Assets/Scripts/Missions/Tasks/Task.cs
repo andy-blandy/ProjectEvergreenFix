@@ -21,4 +21,15 @@ public class Task : MonoBehaviour
         isTaskComplete = false;
         parentMission.OnTaskIncomplete(this);
     }
+
+    public void Copy(TaskObject obj)
+    {
+        description = obj.description;
+        SpecificCopy(obj);
+    }
+
+    public virtual void SpecificCopy(TaskObject obj)
+    {
+
+    }
 }
