@@ -1,3 +1,6 @@
+//Written by Adele Rousseau
+// @oracle1812 on discord
+//Description: This sets the office building script, it inherits from the building class and overwrites some of the methods.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,5 +19,11 @@ public class OfficeBuilding : Building
             GameManager.instance.addImpact(impact);
             GameManager.instance.addHappiness(happiness);
         }
+    }
+    public override void Removed()
+    {
+        GameManager.instance.subtractJobs(jobs);
+        GameManager.instance.subtractImpact(impact);
+        GameManager.instance.subtractHappiness(happiness);
     }
 }
