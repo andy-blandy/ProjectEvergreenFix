@@ -1,6 +1,6 @@
 //Written by Adele Rousseau
-// @oracle1812 on dicord
-//Description: This sets the house script, it inherits from the building class and overwrites some of the methods.
+// @oracle1812 on discord
+//Description: This sets the library script, it inherits from the building class and overwrites some of the methods.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
