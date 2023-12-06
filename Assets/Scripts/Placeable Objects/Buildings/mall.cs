@@ -1,18 +1,29 @@
+//Written by Adele Rousseau
+// @oracle1812 on dicord
+//Description: This sets the farm script, it inherits from the building class and overwrites some of the methods.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class mall : MonoBehaviour
+public class mall : Building
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int happiness = 10;
+    public int jobs = 100;
+    public int impact = 20;
 
-    // Update is called once per frame
-    void Update()
+    public override void Placed()
     {
-        
+        if (isPowered == true)
+        {
+            GameManager.instance.addHappiness(happiness);
+            GameManager.instance.addJobs(jobs);
+            GameManager.instance.addImpact(impact);
+        }
+    }
+    public override void Removed()
+    {
+        GameManager.instance.subtractHappiness(happiness);
+        GameManager.instance.subtractJobs(jobs);
+        GameManager.instance.subtractImpact(impact);
     }
 }
