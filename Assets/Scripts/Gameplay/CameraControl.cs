@@ -78,8 +78,12 @@ public class CameraControl : MonoBehaviour
             movementVector.x += 1.0f;
         }
 
-        // Apply the movement to the camera gimbal
-        transform.Translate(movementVector * movementSpeed * Time.deltaTime);
+        // Check to make sure camera is within map boundaries
+        if (WithinBoundaries(transform.position + (movementVector * movementSpeed * Time.deltaTime)))
+        {
+            // Apply the movement to the camera gimbal
+            transform.Translate(movementVector * movementSpeed * Time.deltaTime);
+        }
     }
 
     void Rotate()
@@ -140,7 +144,10 @@ public class CameraControl : MonoBehaviour
             }
 
             // Apply the zoom to the camera gimbal
-            transform.position = newPosition;
+            if (WithinBoundaries(newPosition))
+            {
+                transform.position = newPosition;
+            }
         }
     }
 
@@ -162,5 +169,18 @@ public class CameraControl : MonoBehaviour
             rotateSpeed = normalRotateSpeed;
             zoomSpeed = normalZoomSpeed;
         }
+    }
+
+    public bool WithinBoundaries(Vector3 result)
+    {
+        if (result.z > GameManager.instance.mapSize.z * 0.5f ||
+    result.z < GameManager.instance.mapSize.z * -0.5f ||
+    result.x > GameManager.instance.mapSize.x * 0.5f ||
+    result.x < GameManager.instance.mapSize.x * -0.5f)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

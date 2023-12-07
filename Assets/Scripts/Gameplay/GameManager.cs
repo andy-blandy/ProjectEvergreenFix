@@ -17,7 +17,13 @@ public class GameManager : MonoBehaviour
 {
     public Camera gameCamera;
 
+    public Road startingRoad;
+
     public string townName;
+
+    [Header("Town Size")]
+    public Vector3 mapSize;
+    public Vector3 mapCenter;
 
     [Header("Town Stats")]
     public int money = 1000;
@@ -42,6 +48,10 @@ public class GameManager : MonoBehaviour
     [Header("Town States")]
     public bool inBlackout;
 
+
+    [Header("Timers")]
+    public float timeBetweenPopIncrease = 10f;
+    public float newPopTimer;
 
     // Singleton
     [HideInInspector] public static GameManager instance;
@@ -69,6 +79,13 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         CheckPower();
+
+        newPopTimer += Time.deltaTime;
+        if (newPopTimer > timeBetweenPopIncrease)
+        {
+            AddPopulation();
+            newPopTimer = 0;
+        }
     }
 
     public void CheckPower()
@@ -85,6 +102,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void AddPopulation()
+    {
+        House house = startingRoad.SearchForResidential();
+
+        if (house == null)
+        {
+            Debug.Log("NO HOUSE FOUND");
+        } else
+        {
+            house.heldPop += 1;
+            population += 1;
+        }
+    }
 
     #region Getters and Setters
     public int getMoney()
@@ -195,4 +225,10 @@ public class GameManager : MonoBehaviour
         populationCapacity -= loss;
     }
     #endregion
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(mapCenter, mapSize);
+    }
 }

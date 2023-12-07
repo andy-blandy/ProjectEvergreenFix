@@ -23,7 +23,6 @@ public class DialogueTrigger : MonoBehaviour
     {
         // Try to avoid using 'FindObjectOfType' when possible, it's not great for performance.
         // You can add a singleton to the DialogueManager and use the instance of that; see lines 31 - 37 of GameManager for an example.
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
     public Dialogue GetDialogue()
     {

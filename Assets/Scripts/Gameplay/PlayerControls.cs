@@ -15,6 +15,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using static UnityEngine.CullingGroup;
 
@@ -25,10 +26,8 @@ public class PlayerControls : MonoBehaviour
     private Camera gameCamera;
 
     [Header("Tilemap")]
-    public GridLayout gridLayout;
-    private Grid grid;
-    [SerializeField] private Tilemap mainTileMap;
-    [SerializeField] private TileBase whiteTile;
+    public Vector3 mousePosition;
+    Tile currentTile;
 
     [Header("States")]
     public string currentControlMode;
@@ -52,8 +51,6 @@ public class PlayerControls : MonoBehaviour
     void Awake()
     {
         instance = this;
-
-        grid = gridLayout.gameObject.GetComponent<Grid>();
     }
 
     void Start()
@@ -64,12 +61,6 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        // When left mouse clicked...
-        if (Input.GetMouseButtonDown(0))
-        {
-            DoAction();
-        }
-
         // Call a different update method depending on the current mode
         switch (currentControlMode)
         {
@@ -79,25 +70,24 @@ public class PlayerControls : MonoBehaviour
             default:
                 break;
         }
+
+        // When left mouse clicked...
+        if (Input.GetMouseButtonDown(0))
+        {
+            DoAction();
+        }
     }
 
-    public Vector3 GetMouseWorldPosition()
+    public Vector3 GetMouseGroundPosition()
     {
         Ray ray = gameCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit))
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, groundLayer))
         {
-            return raycastHit.point;
+            return raycastHit.collider.transform.position;
         } else
         {
             return Vector3.zero;
         }
-    }
-
-    public Vector3 SnapCoordinateToGrid(Vector3 position)
-    {
-        Vector3Int cellPos = gridLayout.WorldToCell(position);
-        position = grid.GetCellCenterWorld(cellPos);
-        return position;
     }
 
     /// <summary>
@@ -111,10 +101,9 @@ public class PlayerControls : MonoBehaviour
         }
 
         // Set the position of the selected building to the player's cursor (found with raycast)
-        Vector3 mousePosition = SnapCoordinateToGrid(GetMouseWorldPosition());
-        Vector3Int convertedMousePosition = mainTileMap.WorldToCell(mousePosition);
+        mousePosition = GetMouseGroundPosition();
 
-        if (mainTileMap.HasTile(convertedMousePosition))
+        if (true)
         {
             selectedObject.transform.position = mousePosition;
         }
@@ -157,6 +146,11 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     void DoAction()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         switch (currentControlMode)
         {
             case "destroy":
@@ -229,6 +223,12 @@ public class PlayerControls : MonoBehaviour
     /// <param name="objectToSpawn"></param>
     public void SpawnObject(GameObject objectToSpawn)
     {
+        if (selectedObject != null)
+        {
+            Destroy(selectedObject);
+        }
+
+
         isPlacingObject = true;
 
         // Spawn building off screen
@@ -255,13 +255,11 @@ public class PlayerControls : MonoBehaviour
         // Same raycast code as before
         RaycastHit rayHit;
         Physics.Raycast(gameCamera.ScreenPointToRay(Input.mousePosition), out rayHit, Mathf.Infinity, groundLayer);
-        Vector3 mousePosition = SnapCoordinateToGrid(GetMouseWorldPosition());
-        Vector3Int convertedMousePosition = mainTileMap.WorldToCell(mousePosition);
 
         // Do nothing if the mouse is not clicking the ground, or if the building is currently colliding with another object
-        if (rayHit.collider == null || objectScript.isColliding || !mainTileMap.HasTile(convertedMousePosition))
+        if (rayHit.collider == null || objectScript.isColliding)
         {
-            Debug.Log("Ray hit: " + (rayHit.collider != null) + ", Object Colliding: " + objectScript.isColliding + ", Tile In Location: " + mainTileMap.HasTile(convertedMousePosition));
+            Debug.Log("Ray hit: " + (rayHit.collider != null) + ", Object Colliding: " + objectScript.isColliding);
             return;
         }
 
@@ -280,6 +278,8 @@ public class PlayerControls : MonoBehaviour
         {
             BuildingManager.instance.AddBuilding(building);
         }
+
+        TileManager.instance.tileMap[mousePosition].heldObject = objectScript;
 
         // Stop tracking object
         isPlacingObject = false;

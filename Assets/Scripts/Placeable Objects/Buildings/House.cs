@@ -8,7 +8,8 @@ using UnityEngine;
 public class House : Building
 {
     // These variables should be public or serialized so that we can view and edit them in the Inspector
-    public int popIncrease = 4;
+    public int heldPop = 0;
+    public int popCapacity = 4;
     //int powerCost = 10;
 
     void Start()
@@ -18,13 +19,20 @@ public class House : Building
 
     public override void Placed()
     {
-        if (isPowered == true)
-        {
-            GameManager.instance.addPopulation(popIncrease);
-        }
+        heldPop = 0;
     }
     public override void Removed()
     {
-        GameManager.instance.subtractPopulation(popIncrease);
+    }
+
+    public bool AtCapacity()
+    {
+        if (heldPop < popCapacity)
+        {
+            return false;
+        } else
+        {
+            return true;
+        }
     }
 }

@@ -36,7 +36,7 @@ public class PlaceableObject : MonoBehaviour
     public bool isColliding;
     private Collider currentCollider;
 
-    void Awake()
+    void Start()
     {
         model = transform.GetChild(0).gameObject;
         modelMeshRenderers = model.GetComponentsInChildren<MeshRenderer>();
