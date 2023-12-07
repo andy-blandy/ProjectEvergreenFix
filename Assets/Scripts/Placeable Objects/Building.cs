@@ -60,6 +60,11 @@ public class Building : PlaceableObject
     }
 
     // Method names should be capitalized
+    public override void OnPlace()
+    {
+        Placed();
+    }
+
     public virtual void Placed() 
     { 
     }
