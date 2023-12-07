@@ -9,7 +9,10 @@ public class parkScript : Building
 {
     public int happiness = 10;
     public int impact = 10;
-
+    void Start()
+    {
+        type = BuildingType.Park;
+    }
     public override void Placed()
     {
             GameManager.instance.addHappiness(happiness);

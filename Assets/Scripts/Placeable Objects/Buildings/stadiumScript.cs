@@ -11,6 +11,10 @@ public class stadiumScript : Building
     public int jobs = 200;
     public int impact = 40;
 
+    void Start()
+    {
+        type = BuildingType.Stadium;
+    }
     public override void Placed()
     {
         if (isPowered == true)

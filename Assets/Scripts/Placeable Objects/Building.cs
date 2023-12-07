@@ -31,7 +31,14 @@ public class Building : PlaceableObject
         House,
         Library,
         OfficeBuilding,
-        SolarFarm
+        SolarFarm,
+        Windmill,
+        Farm,
+        Mall,
+        MovieTheater,
+        NuclearPlant,
+        Park,
+        Stadium
     }
 
     /// <summary>

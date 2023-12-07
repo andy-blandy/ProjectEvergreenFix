@@ -10,6 +10,10 @@ public class Farm : Building
     public int jobs = 10;
     public int impact = 20;
 
+    void Start()
+    {
+        type = BuildingType.Farm;
+    }
     public override void Placed()
     {
         if (isPowered == true)
