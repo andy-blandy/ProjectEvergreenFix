@@ -10,21 +10,14 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public Camera gameCamera;
 
-    public enum Stats
-    {
-        Money,
-        Happiness,
-        Population,
-        Environment,
-        AvailablePower,
-        Jobs
-    }
+    public string townName;
 
     [Header("Town Stats")]
     public int money = 1000;
@@ -35,6 +28,15 @@ public class GameManager : MonoBehaviour
     public int jobs;
     public int population;
     public int populationCapacity;
+    public enum Stats
+    {
+        Money,
+        Happiness,
+        Population,
+        Environment,
+        AvailablePower,
+        Jobs
+    }
     public Dictionary<Stats, int> townStats;
 
     [Header("Town States")]
@@ -47,28 +49,26 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
-        townStats = new Dictionary<Stats, int>();
+        townStats = new Dictionary<Stats, int>
+        {
+            { Stats.Money, money },
+            { Stats.Happiness, happiness },
+            { Stats.Population, population },
+            { Stats.Environment, envImpact },
+            { Stats.AvailablePower, availablePower },
+            { Stats.Jobs, jobs }
+        };
     }
 
     void Start()
     {
-        townStats.Add(Stats.Money, money);
-        townStats.Add(Stats.Happiness, happiness);
-        townStats.Add(Stats.Population, population);
-        townStats.Add(Stats.Environment, envImpact);
-        townStats.Add(Stats.AvailablePower, availablePower);
-        townStats.Add(Stats.Jobs, jobs);
+        inBlackout = false;
 
     }
 
     void Update()
     {
         CheckPower();
-    }
-
-    void BeginGame()
-    {
-        inBlackout = false;
     }
 
     public void CheckPower()
@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
             BuildingManager.instance.PowerUpBuildings();
         }
     }
+
 
     #region Getters and Setters
     public int getMoney()
@@ -113,6 +114,22 @@ public class GameManager : MonoBehaviour
     public int getPopCapacity()
     {
         return populationCapacity;
+    }
+
+    public void SetTownName(string name)
+    {
+        townName = name;
+        PlayerHUD.instance.UpdateTownName();
+    }
+
+    public void SetTownName(TMP_InputField inputField)
+    {
+        if (inputField.text == "")
+        {
+            return;
+        }
+
+        SetTownName(inputField.text);
     }
 
     public void addMoney(int newMoney)

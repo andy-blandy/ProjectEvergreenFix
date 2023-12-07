@@ -18,6 +18,8 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
+    public TextMeshProUGUI townNameText;
+
     [Header("Resource UI: Values")]
     public TextMeshProUGUI envImpactText;
     public TextMeshProUGUI populationText;
@@ -78,6 +80,11 @@ public class PlayerHUD : MonoBehaviour
         isMissionsOpen = false;
         isEditOpen = false;
         isPlaceOpen = false;
+    }
+
+    public void UpdateTownName()
+    {
+        townNameText.text = GameManager.instance.townName;
     }
 
     /// <summary>
