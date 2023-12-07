@@ -11,6 +11,10 @@ public class nuclearPlantScript : Building
     public int impact = 40;
     public int powerGenerated = 2000;
 
+    void Start()
+    {
+        type = BuildingType.NuclearPlant;
+    }
     public override void Placed()
     {
         if (isPowered == true)

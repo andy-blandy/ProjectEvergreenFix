@@ -31,7 +31,14 @@ public class Building : PlaceableObject
         House,
         Library,
         OfficeBuilding,
-        SolarFarm
+        SolarFarm,
+        Windmill,
+        Farm,
+        Mall,
+        MovieTheater,
+        NuclearPlant,
+        Park,
+        Stadium
     }
 
     /// <summary>
@@ -53,6 +60,11 @@ public class Building : PlaceableObject
     }
 
     // Method names should be capitalized
+    public override void OnPlace()
+    {
+        Placed();
+    }
+
     public virtual void Placed() 
     { 
     }

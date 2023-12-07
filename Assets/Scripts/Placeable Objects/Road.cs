@@ -5,43 +5,15 @@ using UnityEngine;
 public class Road : PlaceableObject
 {
     [Header("Road Connections")]
-    public Transform[] connectors;
-
-    public bool isConnectedToTownSquare;
+    public List<Road> connectedRoads = new List<Road>(4);
 
     // This allows us to communicate with RoadManager whenever a road is placed
     public delegate void RoadPlacedAction();
-    //public event RoadPlacedAction OnRoadPlaced;
+    public event RoadPlacedAction OnRoadPlaced;
 
-    void CheckForConnections()
+    public void CheckForConnectingRoads()
     {
-        bool[] isConnected = new bool[connectors.Length];
-        int index = 0;
-        foreach (Transform connector in connectors)
-        {
-            RaycastHit hit;
 
-            if (Physics.Raycast(connector.position, connector.forward, out hit, 1.0f, 7))
-            {
-                if (hit.transform.GetComponent<Road>().isConnectedToTownSquare)
-                {
-                    isConnected[index] = true;
-                }
-            }
-
-            index++;
-        }
-
-        for (int i = 0; i < isConnected.Length; i++)
-        {
-            if (!isConnected[i]) 
-            { 
-                isConnectedToTownSquare = false;
-                return;
-            }
-        }
-
-        isConnectedToTownSquare = true;
     }
 
     public override void OnPlace()

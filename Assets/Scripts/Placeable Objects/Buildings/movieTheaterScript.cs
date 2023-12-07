@@ -11,6 +11,10 @@ public class movieTheaterScript : Building
     public int jobs = 20;
     public int impact = 20;
 
+    void Start()
+    {
+        type = BuildingType.MovieTheater;
+    }
     public override void Placed()
     {
         if (isPowered == true)
