@@ -174,9 +174,9 @@ public class CameraControl : MonoBehaviour
     public bool WithinBoundaries(Vector3 result)
     {
         if (result.z > GameManager.instance.mapSize.z * 0.5f ||
-    result.z < GameManager.instance.mapSize.z * -0.5f ||
-    result.x > GameManager.instance.mapSize.x * 0.5f ||
-    result.x < GameManager.instance.mapSize.x * -0.5f)
+            result.z < GameManager.instance.mapSize.z * -0.5f ||
+            result.x > GameManager.instance.mapSize.x * 0.5f ||
+            result.x < GameManager.instance.mapSize.x * -0.5f)
         {
             return false;
         }

@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
     {
         inBlackout = false;
 
+        TileManager.instance.GenerateBox(mapCenter, mapSize);
     }
 
     void Update()
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
         newPopTimer += Time.deltaTime;
         if (newPopTimer > timeBetweenPopIncrease)
         {
-            AddPopulation();
+            //AddPopulation();
             newPopTimer = 0;
         }
     }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4221552923454986655}
   - component: {fileID: 5885359674901384110}
   - component: {fileID: 5418276388733921611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &5759693527383839795
 MeshFilter:
