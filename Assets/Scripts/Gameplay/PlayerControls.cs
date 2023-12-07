@@ -228,7 +228,6 @@ public class PlayerControls : MonoBehaviour
             Destroy(selectedObject);
         }
 
-
         isPlacingObject = true;
 
         // Spawn building off screen

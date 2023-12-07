@@ -73,13 +73,13 @@ public class StatChangePopup : MonoBehaviour
     IEnumerator AnimatePopup()
     {
         Vector3 goalDestination = transform.position + new Vector3(0f, totalMoveAmount, 0f);
+        Vector3 moveAmount = goalDestination - transform.position;
+        moveAmount *= 0.1f;
 
         while (transform.position != goalDestination)
         {
             // Move the popup
             // There's probably a better way to do this?
-            Vector3 moveAmount = goalDestination - transform.position;
-            moveAmount *= 0.1f;
             transform.position += moveAmount;
 
             // Changes the alpha of the object to have it 'fade'

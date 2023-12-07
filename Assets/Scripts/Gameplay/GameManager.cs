@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
 {
     public Camera gameCamera;
 
+    public GameObject roadPrefab;
     public Road startingRoad;
+    public Vector3 startingRoadPosition;
 
     public string townName;
 
@@ -75,6 +77,7 @@ public class GameManager : MonoBehaviour
         inBlackout = false;
 
         TileManager.instance.GenerateBox(mapCenter, mapSize);
+        SpawnStartingRoad();
     }
 
     void Update()
@@ -84,9 +87,16 @@ public class GameManager : MonoBehaviour
         newPopTimer += Time.deltaTime;
         if (newPopTimer > timeBetweenPopIncrease)
         {
-            //AddPopulation();
+            AddPopulation();
             newPopTimer = 0;
         }
+    }
+
+    void SpawnStartingRoad()
+    {
+        GameObject spawnedRoad = Instantiate(roadPrefab, startingRoadPosition, Quaternion.Euler(0f, 90f, 0f));
+        startingRoad = spawnedRoad.GetComponent<Road>();
+        TileManager.instance.tileMap[startingRoadPosition].heldObject = startingRoad;
     }
 
     public void CheckPower()
@@ -231,5 +241,8 @@ public class GameManager : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(mapCenter, mapSize);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(startingRoadPosition, 0.5f);
     }
 }
