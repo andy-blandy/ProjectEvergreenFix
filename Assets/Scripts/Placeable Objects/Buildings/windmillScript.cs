@@ -11,6 +11,11 @@ public class windmillScript : Building
     public int impact = 30;
     public int powerGenerated = 1500;
 
+    void Start()
+    {
+        type = BuildingType.Windmill;
+    }
+
     public override void Placed()
     {
         if (isPowered == true)

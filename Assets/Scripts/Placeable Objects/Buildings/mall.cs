@@ -11,6 +11,10 @@ public class mall : Building
     public int jobs = 100;
     public int impact = 20;
 
+    void Start()
+    {
+        type = BuildingType.Mall;
+    }
     public override void Placed()
     {
         if (isPowered == true)

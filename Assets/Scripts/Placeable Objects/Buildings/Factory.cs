@@ -11,6 +11,10 @@ public class Factory : Building
     public int impact = 20;
     public int powerGenerated = 1000;
 
+    void Start()
+    {
+        type = BuildingType.Factory;
+    }
     public override void Placed()
     {
         if (isPowered == true)
