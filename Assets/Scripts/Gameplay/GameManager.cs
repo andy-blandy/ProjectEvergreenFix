@@ -16,6 +16,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
     public Camera gameCamera;
 
     public GameObject roadPrefab;
@@ -23,6 +24,10 @@ public class GameManager : MonoBehaviour
     public Vector3 startingRoadPosition;
 
     public string townName;
+
+    [Header("Pausing")]
+    public bool isPaused;
+    public GameObject pauseMenu;
 
     [Header("Town Size")]
     public Vector3 mapSize;
@@ -83,6 +88,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+
         CheckPower();
 
         newPopTimer += Time.deltaTime;
@@ -94,6 +104,21 @@ public class GameManager : MonoBehaviour
         if(envImpact > 100)
         {
             SceneManager.LoadScene(3);
+        }
+    }
+
+    public void PauseGame()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 1f;
+            isPaused = false;
+            PauseMenu.instance.CloseAllMenus();
+        } else
+        {
+            Time.timeScale = 0f;
+            isPaused = true;
+            PauseMenu.instance.OpenPauseMenu();
         }
     }
 

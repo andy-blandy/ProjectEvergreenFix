@@ -1,46 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
 
 
-    public float bgVolume;
-    public float volSFX;
-    PlayerControls p = new PlayerControls();
+    public AudioMixer audioMixer;
+    public float masterVol;
+    public float musicVol;
+    public float sfxVol;
 
     public GameObject pauseMenuUI;
+    public GameObject settingsMenu;
 
-    // Update is called once per frame
-    void Update()
+    public static PauseMenu instance;
+    void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
+        instance = this;
     }
-    public void Resume()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
-    }
-    void Pause()
+
+    public void OpenPauseMenu()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        GameIsPaused = true;
     }
+
+    public void CloseAllMenus()
+    {
+        pauseMenuUI.SetActive(false);
+        settingsMenu.SetActive(false);
+    }
+
+    public void Resume()
+    {
+        GameManager.instance.PauseGame();
+    }
+
     public void LoadMenu()
     {
         SceneManager.LoadScene("Title");
@@ -50,17 +49,22 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Game Closed");
         Application.Quit();
     }
-    public void settings()
+
+    public void SetMasterVol(Slider slider)
     {
-        GUI.Label(new Rect(5, 170, 125, 30), "SFX Volume:");
-        volSFX = GUI.HorizontalSlider(new Rect(115, 175, 125, 30), volSFX, 0.0f, 1.0f);
-        setSFX(volSFX);
+        masterVol = slider.value;
+        audioMixer.SetFloat("Master", masterVol);
     }
 
-    public void setSFX(float SFX)
+    public void SetMusicVol(Slider slider)
     {
-        p.buildSFX.GetComponent<AudioSource>().volume = SFX;
-        p.destroySFX.GetComponent<AudioSource>().volume = SFX;
-        p.buttonSFX.GetComponent<AudioSource>().volume = SFX;
+        musicVol = slider.value;
+        audioMixer.SetFloat("Music", musicVol);
+    }
+
+    public void SetSFXVol(Slider slider) 
+    { 
+        sfxVol = slider.value;
+        audioMixer.SetFloat("SFX", sfxVol);
     }
 }
