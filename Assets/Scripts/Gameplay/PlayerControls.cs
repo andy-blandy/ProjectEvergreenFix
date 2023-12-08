@@ -24,8 +24,9 @@ public class PlayerControls : MonoBehaviour
     // We need a reference to the gameCamera to shoot raycasts out of.
     // This will allow the player to interact with objects on the grid.
     private Camera gameCamera;
+ 
 
-    [Header("Tilemap")]
+     [Header("Tilemap")]
     public Vector3 mousePosition;
     Tile currentTile;
 
