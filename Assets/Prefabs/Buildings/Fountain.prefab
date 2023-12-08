@@ -26,7 +26,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8513195291774051523}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,6 +33,7 @@ Transform:
   m_Children:
   - {fileID: 8418094742146450988}
   m_Father: {fileID: 0}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4681905848957633072
 MonoBehaviour:
@@ -58,9 +58,9 @@ MonoBehaviour:
   isColliding: 0
   isConnectedToRoads: 0
   isPowered: 1
-  type: 0
+  type: 1
   powerCost: 1
-  environmentalImpact: 1
+  impact: 1
 --- !u!54 &5371808963234259106
 Rigidbody:
   m_ObjectHideFlags: 0

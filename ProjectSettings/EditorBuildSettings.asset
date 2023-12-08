@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialPrototype.unity
     guid: 4729eebc54c6c204294476d24d18dc90
+  - enabled: 1
+    path: Assets/Scenes/Bad Ending.unity
+    guid: 02d5dee7ec1abe6499e1cc23ec475e57
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

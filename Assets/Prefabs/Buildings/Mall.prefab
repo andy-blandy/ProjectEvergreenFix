@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 1397995885265071446}
   - component: {fileID: 8826722403367375723}
   - component: {fileID: 830504703444326948}
+  - component: {fileID: -8953096702834358637}
+  - component: {fileID: 2765130741571376597}
+  - component: {fileID: -674983114418265253}
   m_Layer: 0
   m_Name: Mall
   m_TagString: Untagged
@@ -85,3 +88,79 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &-8953096702834358637
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009905359627298251}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &2765130741571376597
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009905359627298251}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 0.1, z: 0.3}
+  m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &-674983114418265253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009905359627298251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bb73485dc8ded45a2db7cba5c36141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: 
+  cost: 0
+  uiDescription: 
+  uiIcon: {fileID: 0}
+  isPaidFor: 0
+  isPlaced: 0
+  model: {fileID: 0}
+  modelMeshRenderers: []
+  isColliding: 0
+  isConnectedToRoads: 0
+  isPowered: 1
+  type: 8
+  powerCost: 1
+  happiness: 10
+  jobs: 100
+  impact: 20
