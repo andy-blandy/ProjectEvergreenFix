@@ -12,6 +12,13 @@ public class SceneChange : MonoBehaviour
     public void LoadScene(int sceneBuildIndex)
     {
         buttonSFX.Play();
-        SceneManager.LoadScene(sceneBuildIndex);
+        if (sceneBuildIndex == 99)
+        {
+            Debug.Log("Game Closed");
+            Application.Quit();
+        }
+        else {
+            SceneManager.LoadScene(sceneBuildIndex);
+        }
     }
 }
